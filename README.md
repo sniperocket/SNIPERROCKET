@@ -334,6 +334,10 @@ Ao abrir aparece o cabeçalho (versão, status de X/Sites/Tela/Wallet/Verificaç
 À esquerda ficam os quatro monitores (X, sites, tela e wallet) e o **5) Iniciar monitoramento**; à direita, carteira, configurações e o resto. **Atenção (v1.3.0): os números da coluna da direita mudaram** — private key agora é 6, saldo 7, configurações 8, Auto Sell 9, verificação 10, atualizar 11 e assinatura 12.
 Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0` volta.
 
+**Tecla voltar (v1.3.3):** em qualquer menu, submenu ou campo (carteira, chave, %, valor…), digite **só um ESPAÇO e Enter** para cancelar e voltar à tela anterior **sem salvar nada**. Textos com espaço no meio (ex.: palavras da verificação secundária) continuam aceitos normalmente.
+
+**Painel Eventos (v1.3.3):** durante o monitoramento mostra só as **últimas 10 linhas** (as mais antigas sobem e somem); o histórico completo continua no arquivo de log.
+
 **1) SNIPER X CONFIG** — 1) liga/desliga o monitor do X, 2) Bearer Token, 3) cadastrar perfil (sem @), 4) remover perfil, 5) modo `stream` (tempo real, recomendado) ou `polling`, 6) intervalo do polling.
 
 **2) SNIPER SITE CONFIG** — 1) liga/desliga o monitor de sites, 2) adicionar site, 3) remover site, 4) intervalo em segundos.
