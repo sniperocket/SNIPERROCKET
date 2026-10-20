@@ -22,7 +22,7 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 |---|---|
 | **Monitor do X (Twitter)** | Acompanha em tempo real os perfis que você cadastrar. Quando um deles posta um contrato Solana, o bot compra. |
 | **Monitor de sites** | Verifica sites de tempos em tempos (ex.: a cada 1,5 s) e compra quando um contrato novo aparece na página. |
-| **Monitor de tela (Discord)** | Lê com o OCR do próprio Windows uma área da tela onde está o canal do Discord. Compra só contratos **novos** (os que já estavam na tela ao iniciar são ignorados), uma vez cada, depois de confirmar que o endereço existe na blockchain. |
+| **Monitor de tela (Discord)** | Lê com o OCR do próprio Windows a janela do Discord (ou a tela inteira). Compra só contratos **novos** (os que já estavam na tela ao iniciar são ignorados), uma vez cada, depois de confirmar que o endereço existe na blockchain. |
 | **SNIPER WALLET** | Vigia carteiras Solana que você cadastrar e compra na hora **qualquer token que elas criarem** (pump.fun, Bonk/LaunchLab, Meteora, SPL/Token-2022…). Tempo real por websocket, com consulta a cada 1 s se o websocket cair. |
 | **Uma compra por vez** | A primeira detecção (de qualquer monitor) compra e todos os monitores param — nunca compra duas vezes no mesmo monitoramento. |
 | **Compra automática** | Compra pelo **Jupiter** (melhor rota). Se o Jupiter falhar (token ainda não indexado, erro 503…), usa a **PumpPortal** como reserva. |
@@ -344,12 +344,14 @@ Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0`
 
 **3) SNIPER TELA** (monitor de tela / Discord)
 1. Captura de tela — liga/desliga.
-2. **Selecionar área** — ponha o mouse no canto **superior esquerdo** da área das mensagens do Discord e aperte Enter no bot; depois no canto **inferior direito** e Enter.
-3. **Ver área selecionada** — salva e abre uma imagem (`config\area_preview.png`) para conferir.
+2. **Modo de captura** (v1.3.5):
+   - **1) Escolher janela** — mostra a lista das janelas abertas; digite o número da janela do Discord. O bot lê **só aquela janela**, mesmo que outra janela esteja por cima, e a reencontra sozinho se o Discord for reaberto.
+   - **2) TODA ÁREA** — lê a tela inteira (todos os monitores). É o padrão; quem usava a seleção de área antiga passa automaticamente para TODA ÁREA.
+3. **Ver captura** — salva e abre uma imagem (`config\area_preview.png`) com o que o bot está lendo.
 4. Intervalo (ms) entre leituras.
 5. **Testar OCR** — mostra o texto lido e os endereços encontrados.
 
-Dicas: deixe o Discord **aberto, visível e rolado até o fim** (mensagens mais novas embaixo), sem outra janela por cima da área, e não mova/redimensione a janela depois de selecionar a área. A janela do bot pode ficar ao lado.
+Dicas: deixe o Discord **aberto e rolado até o fim** (mensagens mais novas embaixo). No modo janela, **não minimize** o Discord (minimizado o Windows não desenha a janela; o bot avisa e espera ela voltar). Se a prévia sair preta, use **TODA ÁREA**. A seleção de área com o mouse foi removida na v1.3.5.
 
 **4) SNIPER WALLET CONFIG** (novo na v1.3.0) — vigia carteiras Solana e **compra na hora qualquer token que uma delas CRIAR**.
 1. **SNIPER WALLET** — liga/desliga (ON/OFF).
