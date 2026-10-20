@@ -49,7 +49,7 @@ Na Robinhood Chain (EVM, chain ID 4663, gas pago em **ETH**):
 - **8) Configurações**: slippage, **max fee em gwei** (aceita decimal, ex.: `0.05`; `0` = automático pela base fee, hoje ~0.02 gwei),
   priority fee (gwei, normalmente 0), **teto rígido** do max fee, gas limit, RPC (público `https://rpc.mainnet.chain.robinhood.com`,
   ou Alchemy `https://robinhood-mainnet.g.alchemy.com/v2/SUA_CHAVE`), RPC WSS (`wss://robinhood-mainnet.g.alchemy.com/v2/SUA_CHAVE`),
-  sequenciador, rota de compra, checagem honeypot, pré-aprovação para venda. Não existem Jito, priority fee em SOL, Jupiter nem PumpPortal nesta rede.
+  sequenciador, rota de compra, checagem honeypot, pré-aprovação para venda e **feed do sequenciador (EXPERIMENTAL, desligado/OFF por padrão)**. Não existem Jito, priority fee em SOL, Jupiter nem PumpPortal nesta rede.
 - **Snipers X / site / tela**: procuram contratos no formato **`0x` + 40 caracteres hex** (o OCR corrige O→0 e I/l→1) e confirmam on-chain que é um token.
 - **SNIPER WALLET**: cadastre carteiras EVM (`0x…`). Quando uma delas criar um token (deploy direto, Pons V1/V2, launchpads), o bot compra na hora.
   Com RPC WSS configurado, usa assinaturas `newHeads`/`logs`; sem WSS, varre os blocos a cada 250 ms.
