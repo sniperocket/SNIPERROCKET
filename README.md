@@ -36,6 +36,29 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 
 ---
 
+## 🟢 Robinhood Chain (v1.4.0) — opção 13) MUDAR REDE
+
+Na tela inicial, a coluna da direita tem **13) MUDAR REDE**: escolha **1) Solana** ou **2) Robinhood Chain**. O bot inteiro passa a
+usar a rede escolhida (fica salva). Cada rede tem a **sua própria** private key, RPC, valor de compra, slippage, gas e carteiras
+vigiadas — trocar de rede **nunca apaga nem altera** as configurações da outra. O cabeçalho mostra a rede ativa e toda linha de
+compra/venda no painel Eventos começa com `[SOL]` ou `[RH]`.
+
+Na Robinhood Chain (EVM, chain ID 4663, gas pago em **ETH**):
+- **6) Cadastrar private key**: chave EVM (64 caracteres hex, com ou sem `0x`) de uma carteira **nova e dedicada** (ex.: MetaMask/Rabby → Exportar chave privada).
+- **7) Saldo**: em ETH. **Valor por compra**: em ETH.
+- **8) Configurações**: slippage, **max fee em gwei** (aceita decimal, ex.: `0.05`; `0` = automático pela base fee, hoje ~0.02 gwei),
+  priority fee (gwei, normalmente 0), **teto rígido** do max fee, gas limit, RPC (público `https://rpc.mainnet.chain.robinhood.com`,
+  ou Alchemy `https://robinhood-mainnet.g.alchemy.com/v2/SUA_CHAVE`), RPC WSS (`wss://robinhood-mainnet.g.alchemy.com/v2/SUA_CHAVE`),
+  sequenciador, rota de compra, checagem honeypot, pré-aprovação para venda. Não existem Jito, priority fee em SOL, Jupiter nem PumpPortal nesta rede.
+- **Snipers X / site / tela**: procuram contratos no formato **`0x` + 40 caracteres hex** (o OCR corrige O→0 e I/l→1) e confirmam on-chain que é um token.
+- **SNIPER WALLET**: cadastre carteiras EVM (`0x…`). Quando uma delas criar um token (deploy direto, Pons V1/V2, launchpads), o bot compra na hora.
+  Com RPC WSS configurado, usa assinaturas `newHeads`/`logs`; sem WSS, varre os blocos a cada 250 ms.
+- **Rotas**: `direct` (padrão) = curva da Pons V2 enquanto o token está na curva, Uniswap V4 quando a Pons graduou, KyberSwap para
+  tokens que já têm pool; `kyber` = KyberSwap primeiro; `uniswap` = só Uniswap. Venda: KyberSwap com fallback direto.
+- **Velocidade**: a rede é "primeiro a chegar" (sem leilão de prioridade, por isso não há Jito). O bot assina localmente, deixa nonce,
+  base fee e conexões prontos e envia a mesma transação ao **sequenciador** e ao **RPC** ao mesmo tempo. Após a compra, já aprova o roteador para a venda sair rápido.
+- Explorer: https://robinhoodchain.blockscout.com
+
 ## 💾 Instalação
 
 1. Abra a página **[Releases](https://github.com/sniperocket/SNIPERROCKET/releases/latest)** e baixe o arquivo **`SniperRocket_Setup_X.Y.Z.exe`** (em "Assets").
