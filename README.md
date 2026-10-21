@@ -36,6 +36,21 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 
 ---
 
+## ⏱️ CRIAÇÃO MÁXIMA (v1.4.1) — menu 8) Configurações (Solana e Robinhood)
+
+Dois itens novos em **8) Configurações**, separados por rede: **CRIAÇÃO MÁXIMA** (ON/OFF, padrão **OFF**) e
+**Idade máxima do token** (padrão 60 s). Digite em segundos ou minutos: `45s`, `90`, `1m`, `1,5 min`, `2 min`
+(número sem unidade = segundos; **ESPAÇO + Enter = voltar** sem salvar).
+
+Com ON, o bot **não compra** se o contrato do token foi criado há mais tempo que o limite no momento da compra — evita
+comprar um token antigo que alguém repostou no X, num site ou no Discord. Vale **só para os snipers X, site e tela (OCR)**;
+a **SNIPER WALLET não usa** essa checagem (ela já compra no momento da criação).
+
+- Não atrasa a compra: a idade é consultada **ao mesmo tempo** que a cotação/montagem/assinatura; o envio só espera se a
+  resposta ainda não chegou. Se a consulta falhar ou demorar (mais de 4 s), o bot **não compra** e mostra o motivo.
+- Solana: data da 1ª transação do mint. Robinhood: se o contrato já existia no bloco de "agora − limite" (1 consulta).
+- O painel Eventos mostra a idade e a decisão, ex.: `[SOL] [idade] … criado há 23s (limite 1.0 min) — ok, enviando`.
+
 ## 🟢 Robinhood Chain (v1.4.0) — opção 13) MUDAR REDE
 
 Na tela inicial, a coluna da direita tem **13) MUDAR REDE**: escolha **1) Solana** ou **2) Robinhood Chain**. O bot inteiro passa a
@@ -49,7 +64,7 @@ Na Robinhood Chain (EVM, chain ID 4663, gas pago em **ETH**):
 - **8) Configurações**: slippage, **max fee em gwei** (aceita decimal, ex.: `0.05`; `0` = automático pela base fee, hoje ~0.02 gwei),
   priority fee (gwei, normalmente 0), **teto rígido** do max fee, gas limit, RPC (público `https://rpc.mainnet.chain.robinhood.com`,
   ou Alchemy `https://robinhood-mainnet.g.alchemy.com/v2/SUA_CHAVE`), RPC WSS (`wss://robinhood-mainnet.g.alchemy.com/v2/SUA_CHAVE`),
-  sequenciador, rota de compra, checagem honeypot, pré-aprovação para venda e **feed do sequenciador (EXPERIMENTAL, desligado/OFF por padrão)**. Não existem Jito, priority fee em SOL, Jupiter nem PumpPortal nesta rede.
+  sequenciador, rota de compra, checagem honeypot, pré-aprovação para venda. Não existem Jito, priority fee em SOL, Jupiter nem PumpPortal nesta rede.
 - **Snipers X / site / tela**: procuram contratos no formato **`0x` + 40 caracteres hex** (o OCR corrige O→0 e I/l→1) e confirmam on-chain que é um token.
 - **SNIPER WALLET**: cadastre carteiras EVM (`0x…`). Quando uma delas criar um token (deploy direto, Pons V1/V2, launchpads), o bot compra na hora.
   Com RPC WSS configurado, usa assinaturas `newHeads`/`logs`; sem WSS, varre os blocos a cada 250 ms.
@@ -57,8 +72,9 @@ Na Robinhood Chain (EVM, chain ID 4663, gas pago em **ETH**):
   tokens que já têm pool; `kyber` = KyberSwap primeiro; `uniswap` = só Uniswap. Venda: KyberSwap com fallback direto.
 - **Velocidade**: a rede é "primeiro a chegar" (sem leilão de prioridade, por isso não há Jito). O bot assina localmente, deixa nonce,
   base fee e conexões prontos e envia a mesma transação ao **sequenciador** e ao **RPC** ao mesmo tempo. Após a compra, já aprova o roteador para a venda sair rápido.
+- **Configurações recomendadas (Robinhood)**: slippage 15–30%, max fee `0` (automático) com teto 1 gwei, RPC + WSS da Alchemy,
+  rota `direct`, e **CRIAÇÃO MÁXIMA ON com 1–2 min** para X/site/tela (itens 16 e 17 do menu 8; SNIPER WALLET não é afetada).
 - Explorer: https://robinhoodchain.blockscout.com
-- 📘 **Guia passo a passo:** veja [Credenciais › 6) Robinhood Chain](#6-robinhood-chain--configuração-passo-a-passo).
 
 ## 💾 Instalação
 
@@ -120,7 +136,6 @@ Tudo o que você colar no bot fica salvo **só no seu computador**, em `%LOCALAP
 | 3 | Jupiter API key | Não, mas **recomendada** | [developers.jup.ag/portal](https://developers.jup.ag/portal) | Menu **8** → item **6) Jupiter API key** |
 | 4 | X (Twitter) Bearer Token | Só se usar o monitor do X | [console.x.com](https://console.x.com) | Menu **1) SNIPER X CONFIG** → item **2) Bearer Token** |
 | 5 | PumpPortal | **Não precisa de nada** | — | — |
-| 6 | Robinhood Chain (private key EVM, ETH, RPC Alchemy) | Só se usar a Robinhood | MetaMask/Rabby + [dashboard.alchemy.com](https://dashboard.alchemy.com) | Veja [6) Robinhood Chain](#6-robinhood-chain--configuração-passo-a-passo) |
 
 > 🔒 **Regra de ouro:** nunca mande nenhuma dessas chaves para ninguém (nem para o "suporte"), não tire print, não cole em sites nem em grupos. Os exemplos deste guia usam só textos de mentira, como `SUA_CHAVE`.
 
@@ -341,137 +356,6 @@ Opções relacionadas (menu **8**): **9) Fallback PumpPortal**, **10) Pool PumpP
 
 ---
 
-### 6) Robinhood Chain — configuração passo a passo
-
-Este guia é para quem vai usar o bot na **Robinhood Chain** (rede EVM, chain ID 4663, gas pago em **ETH**). As configurações da Solana **não são alteradas**: cada rede tem a sua própria private key, RPC, valor, slippage, gas e carteiras vigiadas.
-
-#### Resumo rápido
-
-| # | Credencial / ajuste | Obrigatória? | Onde conseguir | Onde colar no bot |
-|---|---|---|---|---|
-| 1 | Trocar a rede para Robinhood | **Sim** | — | Menu **13) MUDAR REDE** → **2) Robinhood Chain (EVM, ETH)** |
-| 2 | Private key EVM | **Sim** | MetaMask ou Rabby | Menu **6) Cadastrar private key** |
-| 3 | ETH na Robinhood Chain | **Sim** | Bridge / envio de outra carteira | Endereço mostrado no menu **7** |
-| 4 | URL do RPC (Alchemy) | Não, mas **muito recomendada** | [dashboard.alchemy.com](https://dashboard.alchemy.com) | Menu **8** → item **6) RPC HTTP URL** |
-| 5 | Gas, sequenciador, rota etc. | Já vem configurado | — | Menu **8) Configurações (slippage/gas gwei/RPC/rota)** |
-
-> ⚠️ **A Helius não funciona na Robinhood Chain** (ela é só para Solana). Na Robinhood use o RPC público ou a **Alchemy**.
-
-#### Passo 1 — Trocar a rede
-
-1. Na tela inicial, digite **13** (**13) MUDAR REDE**, na coluna da direita) e Enter.
-2. Escolha **2) Robinhood Chain (EVM, ETH)**.
-3. Aparece **"Rede alterada para Robinhood Chain"**. O cabeçalho passa a mostrar a rede ativa e o saldo em ETH. Para voltar para a Solana, é só repetir e escolher **1) Solana** — nada da outra rede é apagado.
-
-> Depois de trocar, os menus **6**, **7**, **8** e **4** passam a ser os da Robinhood. O menu 8 aparece como **8) Configurações (slippage/gas gwei/RPC/rota)**.
-
-#### Passo 2 — Private key EVM (menu 6)
-
-**O que é:** a chave que assina as compras e vendas na Robinhood Chain. É **separada** da chave Solana (cadastrar uma não altera a outra).
-
-**Formato:** `0x` + **64 caracteres hexadecimais** (0-9 e a-f). O bot aceita **com ou sem** o `0x`. Exemplo de **formato** (não é uma chave de verdade):
-
-```
-0xSUA_PRIVATE_KEY_EVM_COM_64_CARACTERES_HEX
-```
-
-> ⚠️ Assim como na Solana: **não** é a frase de recuperação (12/24 palavras) e **não** é o endereço da carteira (`0x` + 40 caracteres, que é público).
-
-**Crie uma carteira NOVA só para o bot**, com pouco saldo. Nunca use sua carteira principal.
-
-**Opção A — MetaMask ([metamask.io](https://metamask.io))**
-1. Crie uma conta nova (**Adicionar conta**) só para o bot.
-2. Clique nos **três pontinhos** da conta → **Detalhes da conta** → **Exibir chave privada** (ou **Exportar chave privada**).
-3. Digite a senha da MetaMask, confirme e **copie** a chave.
-
-**Opção B — Rabby ([rabby.io](https://rabby.io))**
-1. Crie um endereço novo só para o bot.
-2. Clique no endereço → **Manage address / Gerenciar endereço** → **Private key / Chave privada**.
-3. Digite a senha e **copie** a chave.
-
-**Colar no bot**
-1. No menu principal (com a rede Robinhood ativa), digite **6** e Enter.
-2. Em **"Private key EVM (64 hex, com ou sem 0x; não aparece ao digitar; vazio = cancelar)"**, cole a chave (Ctrl+V ou botão direito) — **o texto não aparece**, é proposital — e aperte Enter.
-3. Deve aparecer **"Chave Robinhood salva."** e o saldo em ETH no canto superior direito.
-
-**Erros comuns**
-- **"Chave inválida"**: copiou o endereço (40 caracteres) em vez da chave, faltou/sobrou caractere ou colou duas vezes.
-- Colou as 12/24 palavras: não funciona — exporte a **chave privada**.
-
-#### Passo 3 — Colocar ETH na carteira
-
-1. Use o menu **7) Atualizar/ver saldo** para ver o **endereço** (`0x…`) da carteira do bot.
-2. Envie **ETH na rede Robinhood Chain** para esse endereço (por bridge ou de outra carteira sua que já esteja na Robinhood Chain). ETH em outra rede (Ethereum, Arbitrum, Base…) **não aparece** no bot.
-3. Deixe o valor das compras **mais** um pouco de ETH para as taxas (são muito baixas, veja [Custos](#custos-na-robinhood-chain)).
-4. O **valor por compra** é pedido em **ETH** ao iniciar o monitoramento (**5**).
-
-Explorer para conferir: https://robinhoodchain.blockscout.com
-
-#### Passo 4 — RPC grátis da Alchemy (menu 8 → 6 e 7)
-
-O bot funciona com o RPC público (`https://rpc.mainnet.chain.robinhood.com`), mas um RPC próprio é mais estável e tem mais limite. A Alchemy tem **plano gratuito**.
-
-1. Acesse **[dashboard.alchemy.com](https://dashboard.alchemy.com)** e crie uma conta grátis (e-mail ou Google).
-2. Clique em **Create new app / Criar app**, dê um nome (ex.: `sniper`).
-3. Na escolha de redes (chains), selecione **Robinhood Chain** → **Mainnet**.
-4. Abra o app → **Endpoints / Networks** → Robinhood Chain Mainnet e copie a URL **HTTPS**. Ela tem este formato:
-   ```
-   https://robinhood-mainnet.g.alchemy.com/v2/SUA_CHAVE
-   ```
-5. No bot: menu **8** → item **6) RPC HTTP URL**, cole a URL e Enter.
-6. Item **7) RPC WSS URL**: **deixe vazio** (automático: o bot deriva o `wss://` do seu RPC HTTP, mesma chave) ou cole explicitamente:
-   ```
-   wss://robinhood-mainnet.g.alchemy.com/v2/SUA_CHAVE
-   ```
-   Digite `-` para voltar ao automático.
-
-> 💡 O WSS é usado pela **SNIPER WALLET** (assinaturas `newHeads`/`logs`). Sem WSS, ela varre os blocos a cada 250 ms.
-
-**Erros comuns**
-- Colou a URL da **Helius** ou de outra rede (ex.: `eth-mainnet`): não funciona. A URL precisa começar com `https://robinhood-mainnet.`.
-- Colou só a chave (sem a URL): cole a **URL inteira**.
-
-#### Passo 5 — Valores recomendados (menu 8)
-
-| Item do menu 8 | Recomendado | Por quê |
-|---|---|---|
-| 1) Slippage de compra (%) | 15 (padrão) | Tokens novos variam muito; aumente se a compra falhar por slippage. |
-| 2) Max fee (gwei) | **0** (automático) | O bot usa ~2x a base fee (hoje a base fee é ~0.02 gwei). |
-| 3) Priority fee (gwei) | **0** | A rede é FCFS (primeiro a chegar): **pagar mais não fura a fila**. |
-| 4) Teto rígido do max fee (gwei) | **1** | Proteção: o bot nunca paga acima disso. |
-| 5) Gas limit | padrão (600000) | Não precisa mexer. |
-| 6) RPC HTTP URL | sua URL da Alchemy | Veja o Passo 4. |
-| 7) RPC WSS URL | vazio (automático) | Derivado do RPC HTTP. |
-| 8) Sequenciador | `https://sequencer.mainnet.chain.robinhood.com` (padrão) | Envio direto ao sequenciador. |
-| 9) Enviar também pelo sequenciador | **ON** | A mesma transação vai ao sequenciador e ao RPC ao mesmo tempo. |
-| 10) RPC: eth_sendRawTransactionSync (EIP-7966) | **ON** | Confirmação mais rápida (com reserva automática). |
-| 11) Rota de compra | **direct** | Curva Pons V2 / Uniswap V4 (Pons graduado) / KyberSwap se já há pool. |
-| 12) Checagem honeypot | **ON** | Roda em paralelo e não atrasa a compra. |
-| 13) Taxa máxima aceitável no aviso honeypot (%) | 15 (padrão) | Avisa sobre tokens com taxa alta. |
-| 14) Pré-aprovar roteador após a compra | **ON** | Comprar com ETH **não precisa de approve**; só a venda precisa — assim a venda já sai rápida. |
-| 15) Feed do sequenciador (EXPERIMENTAL) | **OFF** | Experimental; deixe desligado. |
-
-#### Passo 6 — Snipers e SNIPER WALLET
-
-- **SNIPER X / SITE / TELA**: na Robinhood procuram contratos no formato **`0x` + 40 caracteres hex** (o OCR corrige O→0 e I/l→1) e confirmam on-chain que é um token.
-- **4) SNIPER WALLET CONFIG (Robinhood)**: tem **sua própria lista de carteiras EVM** (as carteiras Solana não são usadas aqui). Use **2) Adicionar carteira EVM** e cole o endereço `0x…` (40 hex). Quando uma delas criar um token (deploy direto, Pons V1/V2, pools/launchpads), o bot compra na hora — só depois de **5) Iniciar monitoramento**.
-
-#### Custos na Robinhood Chain
-
-| Custo | Valor aproximado |
-|---|---|
-| Taxa de rede (gas) por compra | **~US$ 0,005** |
-| Curva da Pons — taxa da plataforma | **1%** na compra e na venda |
-| Curva da Pons — taxa do criador | varia por token (**2%** no token testado), na compra e na venda |
-
-> ⚠️ As taxas da Pons são cobradas pelo contrato do token/plataforma, não pelo bot. Confira sempre antes de comprar valores altos.
-
-#### Dica de velocidade
-
-> 💡 Como a rede é FCFS, o que ganha é **chegar primeiro**. Rodar o bot numa **VPS perto de us-east (Ohio)** reduz a latência até o sequenciador e ajuda bastante.
-
----
-
 ## 🧭 Como usar (menu principal)
 
 Ao abrir aparece o cabeçalho (versão, status de X/Sites/Tela/Wallet/Verificação e saldo) e o menu em **duas colunas**. Digite o número e Enter.
@@ -556,6 +440,11 @@ A venda usa o mesmo caminho do Auto Sell (Jupiter → PumpPortal, priority fee, 
 10. Pool PumpPortal — `auto` (recomendado), `pump`, `bonk`, `raydium`, `pump-amm`, `launchlab`…
 11. **Enviar por RPC + Jito ao mesmo tempo** — envio duplo da mesma transação (só vale com Jito ligado).
 12. **Contrato termina em "pump" → comprar pela PumpPortal** — rota direta para tokens pump.fun (reserva: Jupiter).
+13. **CRIAÇÃO MÁXIMA** — ON/OFF: não compra (X/site/tela) token criado há mais que o limite.
+14. **Idade máxima do token** — ex.: `1m`, `90s` (veja [CRIAÇÃO MÁXIMA](#️-criação-máxima-v141--menu-8-configurações-solana-e-robinhood)).
+
+**Configurações recomendadas (Solana)**: slippage 15–30%, RPC próprio (Helius), Jupiter API key, e **CRIAÇÃO MÁXIMA ON com
+1–2 min** se você usa os snipers X/site/tela (não compra token antigo repostado). SNIPER WALLET não é afetada.
 
 **9) Auto Sell** — 1) liga/desliga, 2) % dos tokens a vender, 3) % de lucro alvo (100 = 2x), 4) intervalo de checagem de preço, 5) slippage de venda, 6) ver posições (com **V** para vender uma posição aberta: parte ou tudo), 7) excluir posição (só do rastreio, não vende), 8) excluir todas as fechadas.
 
