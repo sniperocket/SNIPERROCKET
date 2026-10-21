@@ -401,11 +401,15 @@ Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0`
 2. **Modo de captura** (v1.3.5):
    - **1) Escolher janela** — mostra a lista das janelas abertas; digite o número da janela do Discord. O bot lê **só aquela janela**, mesmo que outra janela esteja por cima, e a reencontra sozinho se o Discord for reaberto.
    - **2) TODA ÁREA** — lê a tela inteira (todos os monitores). É o padrão; quem usava a seleção de área antiga passa automaticamente para TODA ÁREA.
-3. **Ver captura** — salva e abre uma imagem (`config\area_preview.png`) com o que o bot está lendo.
-4. Intervalo (ms) entre leituras.
-5. **Testar OCR** — mostra o texto lido e os endereços encontrados.
+3. **Método** (novo na v1.4.4):
+   - **1) CAPTURA DE TELA** — tira um print da janela/tela e lê com o OCR do Windows. Funciona com qualquer app. É o padrão (quem já usava continua assim).
+   - **2) LEITURA DE TELA** — lê o texto **direto da janela** pela acessibilidade do Windows (UI Automation), sem print e sem OCR: mais rápido e sem erros de leitura (l/1, O/0). Funciona bem com Discord, Chrome e Edge (a acessibilidade liga sozinha; a 1ª leitura pode vir vazia). Em **TODA ÁREA** lê todas as janelas abertas e não minimizadas (menos a do próprio bot).
+   - Se a LEITURA não devolver texto, o bot usa a **CAPTURA DE TELA sozinho** (avisa uma vez no log) e tenta a leitura de novo a cada 30 s.
+4. **Ver captura** — salva e abre uma imagem (`config\area_preview.png`) com o que o bot está vendo (CAPTURA).
+5. Intervalo (ms) entre leituras. O texto só é analisado de novo quando muda.
+6. **Testar** — usa o método escolhido e mostra o texto lido, os endereços encontrados (Solana e Robinhood) e o tempo da leitura.
 
-Dicas: deixe o Discord **aberto e rolado até o fim** (mensagens mais novas embaixo). No modo janela, **não minimize** o Discord (minimizado o Windows não desenha a janela; o bot avisa e espera ela voltar). Se a prévia sair preta, use **TODA ÁREA**. A seleção de área com o mouse foi removida na v1.3.5.
+Dicas: deixe o Discord **aberto e rolado até o fim** (mensagens mais novas embaixo). No modo janela com CAPTURA, **não minimize** o Discord (minimizado o Windows não desenha a janela; o bot avisa e espera ela voltar). Se a prévia sair preta, use **TODA ÁREA** ou a **LEITURA DE TELA**. **ESPAÇO + Enter = voltar.**
 
 **4) SNIPER WALLET CONFIG** (novo na v1.3.0) — vigia carteiras Solana e **compra na hora qualquer token que uma delas CRIAR**.
 1. **SNIPER WALLET** — liga/desliga (ON/OFF).
