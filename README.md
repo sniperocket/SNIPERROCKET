@@ -20,6 +20,7 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 
 | Versão | O que mudou |
 |---|---|
+| **v1.4.9** | **LOCAL TELEGRAM** mais robusto no Telegram Web A: quando a área de mensagens não aparece na árvore, filtra a página (tira abas de pastas, lista de conversas com prévias, cabeçalho até "last seen/online/membros" e a caixa "Mensagem"). **6) Testar** → **d + Enter** salva a árvore UIA em `config/logs/uia-dump-<hora>.txt` (o aviso "área de mensagens não encontrada" já salva sozinho) — envie ao suporte. Menu principal mostra **SUPORTE TELEGRAM @SNIPEROCKET** no canto inferior direito do quadro. |
 | **v1.4.8** | SNIPER TELA → **7) LOCAL DO SNIPER** (só com LEITURA DE TELA): **DISCORD** (só a lista de mensagens), **TELEGRAM** (só a conversa aberta no Telegram Web) ou **OUTRO** (tudo visível). **6) Testar** rápido: roda só o método em uso; **c + Enter** compara os métodos. |
 | **v1.4.7** | LEITURA DE TELA no Chrome/Discord bem mais rápida: lê a lista de mensagens visível numa única consulta (o método antigo, lento, só como último recurso). |
 | **v1.4.6** | LEITURA DE TELA reaproveita a página entre as leituras e lê **só o que está visível** (mensagens roladas para cima não entram); Testar mostra o tempo de cada etapa. |
@@ -125,7 +126,7 @@ O programa é instalado em `%LOCALAPPDATA%\SniperRocket` (pasta do seu usuário)
 - Se a atualização falhar (sem internet, antivírus bloqueou etc.), o bot apenas registra no log e **continua normalmente** na versão atual.
 - Também existe a opção **11) Atualizar** no menu, para verificar/instalar manualmente.
 - **Suas configurações são preservadas**: a atualização só troca o `sniper.exe`; a pasta `config` (chave, tokens, perfis, posições, logs) nunca é apagada nem sobrescrita.
-- A versão atual aparece no topo da tela (ex.: `Sniper X → Solana v1.4.8`).
+- A versão atual aparece no topo da tela (ex.: `Sniper X → Solana v1.4.9`).
 
 ---
 
@@ -403,7 +404,7 @@ Ao abrir aparece o cabeçalho (versão, rede ativa, status de X/Sites/Tela/Walle
 SOL U$105,03 1min
 ```
 
-À esquerda ficam os quatro monitores (X, sites, tela e wallet) e o **5) Iniciar monitoramento**; no meio, carteira, configurações e o resto; à direita, **13) MUDAR REDE** e a rede ativa (com a Robinhood ativa, o item 8 vira "Configurações (slippage/gas gwei/RPC/rota)"). A **última linha** é a [cotação no rodapé](#-cotação-no-rodapé-do-menu-v143). **Atenção (v1.3.0): os números da coluna da direita mudaram** — private key agora é 6, saldo 7, configurações 8, Auto Sell 9, verificação 10, atualizar 11 e assinatura 12.
+À esquerda ficam os quatro monitores (X, sites, tela e wallet) e o **5) Iniciar monitoramento**; no meio, carteira, configurações e o resto; à direita, **13) MUDAR REDE** e a rede ativa (com a Robinhood ativa, o item 8 vira "Configurações (slippage/gas gwei/RPC/rota)"). No canto inferior direito, dentro do quadro do menu, fica **SUPORTE TELEGRAM @SNIPEROCKET** (v1.4.9) — fale com o suporte por lá. A **última linha** é a [cotação no rodapé](#-cotação-no-rodapé-do-menu-v143). **Atenção (v1.3.0): os números da coluna da direita mudaram** — private key agora é 6, saldo 7, configurações 8, Auto Sell 9, verificação 10, atualizar 11 e assinatura 12.
 Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0` volta.
 
 **Tecla voltar (v1.3.3):** em qualquer menu, submenu ou campo (carteira, chave, %, valor…), digite **só um ESPAÇO e Enter** para cancelar e voltar à tela anterior **sem salvar nada**. Textos com espaço no meio (ex.: palavras da verificação secundária) continuam aceitos normalmente.
@@ -425,7 +426,7 @@ Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0`
    - Com LOCAL **OUTRO**: se a LEITURA não devolver texto, o bot usa a **CAPTURA DE TELA sozinho** (avisa uma vez no log) e tenta a leitura de novo a cada 30 s. Com DISCORD/TELEGRAM ele não troca para a CAPTURA (veja o item 7).
 4. **Ver captura** — salva e abre uma imagem (`config\area_preview.png`) com o que o bot está vendo (CAPTURA).
 5. Intervalo (ms) entre leituras (padrão 700 ms). O texto só é analisado de novo quando muda.
-6. **Testar** — usa o método escolhido (e o LOCAL, na LEITURA) e mostra o texto lido, os endereços encontrados (Solana e Robinhood) e o tempo: 1ª leitura x ciclo normal, por etapa (a11y, documento, leitura, análise), e quantos elementos estavam na tela/fora dela. Depois, **Enter = voltar** ou **c + Enter = comparar métodos** (lista de mensagens / área do Telegram, elementos visíveis e TextPattern — este pode levar alguns segundos). Envie esses números se algo estiver lento.
+6. **Testar** — usa o método escolhido (e o LOCAL, na LEITURA) e mostra o texto lido, os endereços encontrados (Solana e Robinhood) e o tempo: 1ª leitura x ciclo normal, por etapa (a11y, documento, leitura, análise), e quantos elementos estavam na tela/fora dela. Depois, **Enter = voltar** ou **c + Enter = comparar métodos** (lista de mensagens / área do Telegram, elementos visíveis e TextPattern — este pode levar alguns segundos), ou **d + Enter = dump da árvore UIA** (tipo, nome, classe, automationId e posição de cada elemento) salvo em `config/logs/uia-dump-<hora>.txt` — o caminho aparece na tela. Envie esses números se algo estiver lento.
 7. **LOCAL DO SNIPER** (v1.4.8, aparece só com o Método **LEITURA DE TELA**; a CAPTURA não muda):
    - **DISCORD** — lê só a lista de mensagens do canal aberto (sem servidores, canais, membros e botões de reação).
    - **TELEGRAM** — lê só as mensagens da conversa aberta no Telegram Web (web.telegram.org/a ou /k): a lista de conversas com as prévias, o cabeçalho e a caixa de mensagem ficam de fora — assim o bot não compra um contrato que aparece na prévia de outra conversa.
