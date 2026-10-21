@@ -30,26 +30,32 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 | **Velocidade** | *Priority fee* configurável, **Jito** (gorjeta/tip para entrar mais rápido no bloco) e **envio duplo**: a mesma transação vai pelo seu RPC e pelo Jito ao mesmo tempo. |
 | **Auto Sell** | Vende automaticamente uma porcentagem dos tokens quando o lucro alvo é atingido (ex.: 100% = preço dobrou). |
 | **Venda manual** | Durante o monitoramento, aperte **V** para vender uma parte (%) ou tudo de uma posição aberta, sem parar o bot. |
-| **Verificação secundária** | Opcional: antes de comprar, confere o **nome/símbolo** do token e só compra se tiver uma das palavras cadastradas por você (ajuda a evitar tokens falsos). |
+| **Verificação secundária** | Opcional: confere **nome/símbolo** (palavras suas), **CRIAÇÃO MÁXIMA** (idade do token) e **MCAP MÁXIMO** (market cap em USD), em paralelo com a compra. |
 | **Atualização automática** | Ao abrir, o bot verifica se existe versão nova e se atualiza sozinho, mantendo suas configurações. |
 | **Assinatura** | **3 dias grátis** no primeiro uso; depois **30 USDC por 30 dias**, pago dentro do próprio bot (veja [Assinatura](#-assinatura)). |
 
 ---
 
-## ⏱️ CRIAÇÃO MÁXIMA (v1.4.1) — menu 8) Configurações (Solana e Robinhood)
+## 🛡️ Verificação secundária (v1.4.2) — opção 10: nome, CRIAÇÃO MÁXIMA e MCAP MÁXIMO (Solana e Robinhood)
 
-Dois itens novos em **8) Configurações**, separados por rede: **CRIAÇÃO MÁXIMA** (ON/OFF, padrão **OFF**) e
-**Idade máxima do token** (padrão 60 s). Digite em segundos ou minutos: `45s`, `90`, `1m`, `1,5 min`, `2 min`
-(número sem unidade = segundos; **ESPAÇO + Enter = voltar** sem salvar).
+A opção **10) Verificação secundária** agora reúne os três filtros, cada um com seu próprio ON/OFF (a tela mostra a rede
+ativa; idade e MCAP são separados por rede). Todos vêm **OFF**; valores já salvos são mantidos. **ESPAÇO + Enter = voltar.**
 
-Com ON, o bot **não compra** se o contrato do token foi criado há mais tempo que o limite no momento da compra — evita
-comprar um token antigo que alguém repostou no X, num site ou no Discord. Vale **só para os snipers X, site e tela (OCR)**;
-a **SNIPER WALLET não usa** essa checagem (ela já compra no momento da criação).
+| Item | O que faz | Vale para |
+|---|---|---|
+| **1–5) Verificação de nome** | Só compra se o nome/símbolo tiver uma palavra cadastrada (lista vazia = não bloqueia). | todos os snipers |
+| **6) CRIAÇÃO MÁXIMA** + **7) Idade máxima** | Não compra token criado há mais que o limite (ex.: `45s`, `90`, `1m`, `2 min`; número sem unidade = segundos). | X, site, tela (**SNIPER WALLET não usa**) |
+| **8) MCAP MÁXIMO** + **9) MCAP máximo (USD)** | Não compra se o market cap no momento da compra passar do limite (ex.: `50000`, `50k`, `1,5m`). | **todos**, inclusive SNIPER WALLET |
 
-- Não atrasa a compra: a idade é consultada **ao mesmo tempo** que a cotação/montagem/assinatura; o envio só espera se a
-  resposta ainda não chegou. Se a consulta falhar ou demorar (mais de 4 s), o bot **não compra** e mostra o motivo.
-- Solana: data da 1ª transação do mint. Robinhood: se o contrato já existia no bloco de "agora − limite" (1 consulta).
-- O painel Eventos mostra a idade e a decisão, ex.: `[SOL] [idade] … criado há 23s (limite 1.0 min) — ok, enviando`.
+- **Não atrasa a compra:** nome, idade e MCAP são consultados **ao mesmo tempo** que a cotação/montagem/assinatura; o envio
+  só espera o que ainda não chegou. A trava de "1 compra por sessão" só é reservada depois que o nome passa — um token
+  reprovado não bloqueia outro que chegue ao mesmo tempo.
+- **MCAP:** preço tirado da própria compra (tokens recebidos pela cotação usada na tx, ou reservas da curva pump.fun) × supply
+  total (1 leitura, em cache). Preço SOL/ETH em USD atualizado em segundo plano a cada ~60 s (Coinbase/Binance/Kraken, sem chave);
+  sem preço atualizado há mais de 5 min = não compra. O valor usa o preço da sua compra (inclui o impacto dela), então fica
+  levemente acima do MCAP "à vista" — margem a favor da segurança.
+- **Falhou ou demorou (> 4 s)? Não compra** e nada é enviado; o motivo aparece no painel Eventos, ex.:
+  `[SOL] [mcap] … MCAP $7.5k (limite $50.0k) — ok` / `[RH] [idade] … criado há mais de 1.0 min — NÃO comprado (CRIAÇÃO MÁXIMA)`.
 
 ## 🟢 Robinhood Chain (v1.4.0) — opção 13) MUDAR REDE
 
@@ -73,7 +79,8 @@ Na Robinhood Chain (EVM, chain ID 4663, gas pago em **ETH**):
 - **Velocidade**: a rede é "primeiro a chegar" (sem leilão de prioridade, por isso não há Jito). O bot assina localmente, deixa nonce,
   base fee e conexões prontos e envia a mesma transação ao **sequenciador** e ao **RPC** ao mesmo tempo. Após a compra, já aprova o roteador para a venda sair rápido.
 - **Configurações recomendadas (Robinhood)**: slippage 15–30%, max fee `0` (automático) com teto 1 gwei, RPC + WSS da Alchemy,
-  rota `direct`, e **CRIAÇÃO MÁXIMA ON com 1–2 min** para X/site/tela (itens 16 e 17 do menu 8; SNIPER WALLET não é afetada).
+  rota `direct`. Na opção **10) Verificação secundária** (com a rede Robinhood ativa): **CRIAÇÃO MÁXIMA ON com 1–2 min** e
+  **MCAP MÁXIMO ON** (ex.: `50k`).
 - Explorer: https://robinhoodchain.blockscout.com
 
 ## 💾 Instalação
@@ -440,15 +447,13 @@ A venda usa o mesmo caminho do Auto Sell (Jupiter → PumpPortal, priority fee, 
 10. Pool PumpPortal — `auto` (recomendado), `pump`, `bonk`, `raydium`, `pump-amm`, `launchlab`…
 11. **Enviar por RPC + Jito ao mesmo tempo** — envio duplo da mesma transação (só vale com Jito ligado).
 12. **Contrato termina em "pump" → comprar pela PumpPortal** — rota direta para tokens pump.fun (reserva: Jupiter).
-13. **CRIAÇÃO MÁXIMA** — ON/OFF: não compra (X/site/tela) token criado há mais que o limite.
-14. **Idade máxima do token** — ex.: `1m`, `90s` (veja [CRIAÇÃO MÁXIMA](#️-criação-máxima-v141--menu-8-configurações-solana-e-robinhood)).
 
-**Configurações recomendadas (Solana)**: slippage 15–30%, RPC próprio (Helius), Jupiter API key, e **CRIAÇÃO MÁXIMA ON com
-1–2 min** se você usa os snipers X/site/tela (não compra token antigo repostado). SNIPER WALLET não é afetada.
+**Configurações recomendadas (Solana)**: slippage 15–30%, RPC próprio (Helius), Jupiter API key. Na opção **10) Verificação
+secundária**: **CRIAÇÃO MÁXIMA ON com 1–2 min** (X/site/tela) e **MCAP MÁXIMO ON** com o teto que você aceita pagar (ex.: `50k`).
 
 **9) Auto Sell** — 1) liga/desliga, 2) % dos tokens a vender, 3) % de lucro alvo (100 = 2x), 4) intervalo de checagem de preço, 5) slippage de venda, 6) ver posições (com **V** para vender uma posição aberta: parte ou tudo), 7) excluir posição (só do rastreio, não vende), 8) excluir todas as fechadas.
 
-**10) Verificação secundária** — 1) liga/desliga, 2) adicionar palavra, 3) remover palavra, 4) listar, 5) testar com um contrato. Com ela ligada e pelo menos uma palavra, o bot só compra se o nome ou símbolo do token contiver uma das palavras (sem diferenciar maiúsculas/acentos). Se o nome não puder ser obtido, não compra. Lista vazia = não bloqueia nada.
+**10) Verificação secundária** — nome: 1) liga/desliga, 2) adicionar palavra, 3) remover palavra, 4) listar, 5) testar com um contrato; 6/7) CRIAÇÃO MÁXIMA; 8/9) MCAP MÁXIMO ([detalhes](#️-verificação-secundária-v142--opção-10-nome-criação-máxima-e-mcap-máximo-solana-e-robinhood)). Com ela ligada e pelo menos uma palavra, o bot só compra se o nome ou símbolo do token contiver uma das palavras (sem diferenciar maiúsculas/acentos). Se o nome não puder ser obtido, não compra. Lista vazia = não bloqueia nada.
 
 **11) Atualizar** — verifica e instala a versão nova manualmente (normalmente não precisa: o bot se atualiza sozinho ao abrir). Quando há versão nova, o topo mostra **"Nova versão vX.Y.Z disponível"**.
 
