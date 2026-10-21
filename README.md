@@ -403,7 +403,7 @@ Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0`
    - **2) TODA ÁREA** — lê a tela inteira (todos os monitores). É o padrão; quem usava a seleção de área antiga passa automaticamente para TODA ÁREA.
 3. **Método** (novo na v1.4.4):
    - **1) CAPTURA DE TELA** — tira um print da janela/tela e lê com o OCR do Windows. Funciona com qualquer app. É o padrão (quem já usava continua assim).
-   - **2) LEITURA DE TELA** — lê o texto **direto da janela** pela acessibilidade do Windows (UI Automation), sem print e sem OCR: mais rápido e sem erros de leitura (l/1, O/0). Funciona bem com Discord, Chrome e Edge (a acessibilidade liga sozinha; a 1ª leitura pode vir vazia). Em **TODA ÁREA** lê todas as janelas abertas e não minimizadas (menos a do próprio bot).
+   - **2) LEITURA DE TELA** — lê o texto **direto da janela** pela acessibilidade do Windows (UI Automation), sem print e sem OCR: mais rápido e sem erros de leitura (l/1, O/0). Funciona com o Discord (app ou discord.com no Chrome/Edge/Brave/Opera): o bot lê **só o conteúdo da página** (nunca a barra de endereço, abas ou extensões) e liga sozinho a acessibilidade do navegador, sem mexer no registro — a 1ª leitura pode levar ~1 s (v1.4.5). Em **TODA ÁREA** lê todas as janelas abertas e não minimizadas (menos a do próprio bot).
    - Se a LEITURA não devolver texto, o bot usa a **CAPTURA DE TELA sozinho** (avisa uma vez no log) e tenta a leitura de novo a cada 30 s.
 4. **Ver captura** — salva e abre uma imagem (`config\area_preview.png`) com o que o bot está vendo (CAPTURA).
 5. Intervalo (ms) entre leituras. O texto só é analisado de novo quando muda.
