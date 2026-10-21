@@ -16,13 +16,27 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 
 ---
 
+## 🆕 Novidades
+
+| Versão | O que mudou |
+|---|---|
+| **v1.4.8** | SNIPER TELA → **7) LOCAL DO SNIPER** (só com LEITURA DE TELA): **DISCORD** (só a lista de mensagens), **TELEGRAM** (só a conversa aberta no Telegram Web) ou **OUTRO** (tudo visível). **6) Testar** rápido: roda só o método em uso; **c + Enter** compara os métodos. |
+| **v1.4.7** | LEITURA DE TELA no Chrome/Discord bem mais rápida: lê a lista de mensagens visível numa única consulta (o método antigo, lento, só como último recurso). |
+| **v1.4.6** | LEITURA DE TELA reaproveita a página entre as leituras e lê **só o que está visível** (mensagens roladas para cima não entram); Testar mostra o tempo de cada etapa. |
+| **v1.4.5** | LEITURA DE TELA no Chrome/Edge/Brave/Opera e no app do Discord: lê o conteúdo da página (antes lia só os botões do navegador). |
+| **v1.4.4** | SNIPER TELA → **3) Método**: **CAPTURA DE TELA** (print + OCR, padrão) ou **LEITURA DE TELA** (texto direto da janela, sem OCR). |
+| **v1.4.3** | **Cotação no rodapé** do menu principal (ex.: `SOL U$105,03 1min`), atualizada a cada 60 s. |
+| **v1.4.2** | **10) Verificação secundária** reúne nome, **CRIAÇÃO MÁXIMA** (itens 6/7) e o novo **MCAP MÁXIMO** (itens 8/9); as checagens rodam em paralelo com a compra. |
+| **v1.4.1** | **CRIAÇÃO MÁXIMA**: não compra token criado há mais que o limite (X, site e tela; Solana e Robinhood). |
+| **v1.4.0** | **Robinhood Chain**: opção **13) MUDAR REDE** (configurações separadas por rede). |
+
 ## O que o bot faz
 
 | Função | Como funciona |
 |---|---|
-| **Monitor do X (Twitter)** | Acompanha em tempo real os perfis que você cadastrar. Quando um deles posta um contrato Solana, o bot compra. |
+| **Monitor do X (Twitter)** | Acompanha em tempo real os perfis que você cadastrar. Quando um deles posta um contrato (Solana, ou `0x…` na Robinhood Chain), o bot compra. |
 | **Monitor de sites** | Verifica sites de tempos em tempos (ex.: a cada 1,5 s) e compra quando um contrato novo aparece na página. |
-| **Monitor de tela (Discord)** | Lê com o OCR do próprio Windows a janela do Discord (ou a tela inteira). Compra só contratos **novos** (os que já estavam na tela ao iniciar são ignorados), uma vez cada, depois de confirmar que o endereço existe na blockchain. |
+| **Monitor de tela (Discord/Telegram)** | Lê a janela do Discord/Telegram (ou a tela inteira) por **CAPTURA DE TELA** (OCR do Windows) ou **LEITURA DE TELA** (texto direto da janela, com LOCAL DO SNIPER DISCORD/TELEGRAM/OUTRO). Compra só contratos **novos** (os que já estavam na tela ao iniciar são ignorados), uma vez cada, depois de confirmar que o endereço existe na blockchain. |
 | **SNIPER WALLET** | Vigia carteiras Solana que você cadastrar e compra na hora **qualquer token que elas criarem** (pump.fun, Bonk/LaunchLab, Meteora, SPL/Token-2022…). Tempo real por websocket, com consulta a cada 1 s se o websocket cair. |
 | **Uma compra por vez** | A primeira detecção (de qualquer monitor) compra e todos os monitores param — nunca compra duas vezes no mesmo monitoramento. |
 | **Compra automática** | Compra pelo **Jupiter** (melhor rota). Se o Jupiter falhar (token ainda não indexado, erro 503…), usa a **PumpPortal** como reserva. |
@@ -31,6 +45,8 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 | **Auto Sell** | Vende automaticamente uma porcentagem dos tokens quando o lucro alvo é atingido (ex.: 100% = preço dobrou). |
 | **Venda manual** | Durante o monitoramento, aperte **V** para vender uma parte (%) ou tudo de uma posição aberta, sem parar o bot. |
 | **Verificação secundária** | Opcional: confere **nome/símbolo** (palavras suas), **CRIAÇÃO MÁXIMA** (idade do token) e **MCAP MÁXIMO** (market cap em USD), em paralelo com a compra. |
+| **Duas redes** | **Solana** ou **Robinhood Chain** (opção 13), cada uma com sua carteira e configurações. |
+| **Cotação no rodapé** | Preço SOL/ETH em dólar e idade da cotação na última linha do menu. |
 | **Atualização automática** | Ao abrir, o bot verifica se existe versão nova e se atualiza sozinho, mantendo suas configurações. |
 | **Assinatura** | **3 dias grátis** no primeiro uso; depois **30 USDC por 30 dias**, pago dentro do próprio bot (veja [Assinatura](#-assinatura)). |
 
@@ -109,7 +125,7 @@ O programa é instalado em `%LOCALAPPDATA%\SniperRocket` (pasta do seu usuário)
 - Se a atualização falhar (sem internet, antivírus bloqueou etc.), o bot apenas registra no log e **continua normalmente** na versão atual.
 - Também existe a opção **11) Atualizar** no menu, para verificar/instalar manualmente.
 - **Suas configurações são preservadas**: a atualização só troca o `sniper.exe`; a pasta `config` (chave, tokens, perfis, posições, logs) nunca é apagada nem sobrescrita.
-- A versão atual aparece no topo da tela (ex.: `Sniper X → Solana v1.2.0`).
+- A versão atual aparece no topo da tela (ex.: `Sniper X → Solana v1.4.8`).
 
 ---
 
@@ -372,29 +388,31 @@ Opções relacionadas (menu **8**): **9) Fallback PumpPortal**, **10) Pool PumpP
 
 ## 🧭 Como usar (menu principal)
 
-Ao abrir aparece o cabeçalho (versão, status de X/Sites/Tela/Wallet/Verificação e saldo) e o menu em **duas colunas**. Digite o número e Enter.
+Ao abrir aparece o cabeçalho (versão, rede ativa, status de X/Sites/Tela/Wallet/Verificação e saldo) e o menu em **três colunas**. Digite o número e Enter.
 
 ```
-1) SNIPER X CONFIG          6) Cadastrar private key
-2) SNIPER SITE CONFIG       7) Atualizar/ver saldo
-3) SNIPER TELA              8) Configurações (slippage/fee/Jito/RPC)
-4) SNIPER WALLET CONFIG     9) Auto Sell
+1) SNIPER X CONFIG          6) Cadastrar private key                    13) MUDAR REDE
+2) SNIPER SITE CONFIG       7) Atualizar/ver saldo                      Rede ativa:
+3) SNIPER TELA              8) Configurações (slippage/fee/Jito/RPC)    Solana
+4) SNIPER WALLET CONFIG     9) Auto Sell                                (SOL)
                             10) Verificação secundária
                             11) Atualizar (verificar nova versão)
 5) Iniciar monitoramento    12) Assinatura (Seu ID: XXXXXXXXXX)
                             0) Sair
+...
+SOL U$105,03 1min
 ```
 
-À esquerda ficam os quatro monitores (X, sites, tela e wallet) e o **5) Iniciar monitoramento**; à direita, carteira, configurações e o resto. **Atenção (v1.3.0): os números da coluna da direita mudaram** — private key agora é 6, saldo 7, configurações 8, Auto Sell 9, verificação 10, atualizar 11 e assinatura 12.
+À esquerda ficam os quatro monitores (X, sites, tela e wallet) e o **5) Iniciar monitoramento**; no meio, carteira, configurações e o resto; à direita, **13) MUDAR REDE** e a rede ativa (com a Robinhood ativa, o item 8 vira "Configurações (slippage/gas gwei/RPC/rota)"). A **última linha** é a [cotação no rodapé](#-cotação-no-rodapé-do-menu-v143). **Atenção (v1.3.0): os números da coluna da direita mudaram** — private key agora é 6, saldo 7, configurações 8, Auto Sell 9, verificação 10, atualizar 11 e assinatura 12.
 Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0` volta.
 
 **Tecla voltar (v1.3.3):** em qualquer menu, submenu ou campo (carteira, chave, %, valor…), digite **só um ESPAÇO e Enter** para cancelar e voltar à tela anterior **sem salvar nada**. Textos com espaço no meio (ex.: palavras da verificação secundária) continuam aceitos normalmente.
 
 **Painel Eventos (v1.3.3):** durante o monitoramento mostra só as **últimas 10 linhas** (as mais antigas sobem e somem); o histórico completo continua no arquivo de log.
 
-**1) SNIPER X CONFIG** — 1) liga/desliga o monitor do X, 2) Bearer Token, 3) cadastrar perfil (sem @), 4) remover perfil, 5) modo `stream` (tempo real, recomendado) ou `polling`, 6) intervalo do polling.
+**1) SNIPER X CONFIG** — 1) liga/desliga o monitor do X, 2) Bearer Token, 3) cadastrar perfil (sem @), 4) remover perfil, 5) modo `stream` (tempo real, recomendado, padrão) ou `polling`, 6) intervalo do polling (padrão 5 s).
 
-**2) SNIPER SITE CONFIG** — 1) liga/desliga o monitor de sites, 2) adicionar site, 3) remover site, 4) intervalo em segundos.
+**2) SNIPER SITE CONFIG** — 1) liga/desliga o monitor de sites, 2) adicionar site, 3) remover site, 4) intervalo em segundos (padrão 1,5 s).
 
 **3) SNIPER TELA** (monitor de tela / Discord)
 1. Captura de tela — liga/desliga.
@@ -403,16 +421,17 @@ Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0`
    - **2) TODA ÁREA** — lê a tela inteira (todos os monitores). É o padrão; quem usava a seleção de área antiga passa automaticamente para TODA ÁREA.
 3. **Método** (novo na v1.4.4):
    - **1) CAPTURA DE TELA** — tira um print da janela/tela e lê com o OCR do Windows. Funciona com qualquer app. É o padrão (quem já usava continua assim).
-   - **2) LEITURA DE TELA** — lê o texto **direto da janela** pela acessibilidade do Windows (UI Automation), sem print e sem OCR: mais rápido e sem erros de leitura (l/1, O/0). Funciona com o Discord (app ou discord.com no Chrome/Edge/Brave/Opera): o bot lê **só o conteúdo da página** (nunca a barra de endereço, abas ou extensões) e liga sozinho a acessibilidade do navegador, sem mexer no registro — a 1ª leitura pode levar ~1 s (v1.4.5). Desde a v1.4.6 as leituras seguintes reaproveitam a página já encontrada e leem **só o que está visível na tela** (mensagens roladas para cima não entram) — bem mais rápido; o **6) Testar** mostra o tempo de cada etapa (a11y, documento, leitura, análise) e, se você digitar **c + Enter**, compara os métodos de leitura (lista de mensagens, elementos visíveis, TextPattern — este pode levar alguns segundos; por padrão o Testar roda só o método em uso, rápido) — envie esses números se algo estiver lento. Na v1.4.7 o bot lê só a **lista de mensagens** visível do Discord (sem barras laterais) e escolhe sozinho o método mais rápido. Em **TODA ÁREA** lê todas as janelas abertas e não minimizadas (menos a do próprio bot).
-   - Se a LEITURA não devolver texto, o bot usa a **CAPTURA DE TELA sozinho** (avisa uma vez no log) e tenta a leitura de novo a cada 30 s.
+   - **2) LEITURA DE TELA** — lê o texto **direto da janela** pela acessibilidade do Windows (UI Automation), sem print e sem OCR: mais rápido e sem erros de leitura (l/1, O/0). Funciona com o Discord (app ou discord.com no Chrome/Edge/Brave/Opera): o bot lê **só o conteúdo da página** (nunca a barra de endereço, abas ou extensões) e liga sozinho a acessibilidade do navegador, sem mexer no registro — a 1ª leitura pode levar ~1 s (v1.4.5). Desde a v1.4.6 as leituras seguintes reaproveitam a página já encontrada e leem **só o que está visível na tela** (mensagens roladas para cima não entram) — bem mais rápido; o que é lido depende do **7) LOCAL DO SNIPER** (abaixo). Em **TODA ÁREA** lê todas as janelas abertas e não minimizadas (menos a do próprio bot).
+   - Com LOCAL **OUTRO**: se a LEITURA não devolver texto, o bot usa a **CAPTURA DE TELA sozinho** (avisa uma vez no log) e tenta a leitura de novo a cada 30 s. Com DISCORD/TELEGRAM ele não troca para a CAPTURA (veja o item 7).
 4. **Ver captura** — salva e abre uma imagem (`config\area_preview.png`) com o que o bot está vendo (CAPTURA).
-5. Intervalo (ms) entre leituras. O texto só é analisado de novo quando muda.
+5. Intervalo (ms) entre leituras (padrão 700 ms). O texto só é analisado de novo quando muda.
+6. **Testar** — usa o método escolhido (e o LOCAL, na LEITURA) e mostra o texto lido, os endereços encontrados (Solana e Robinhood) e o tempo: 1ª leitura x ciclo normal, por etapa (a11y, documento, leitura, análise), e quantos elementos estavam na tela/fora dela. Depois, **Enter = voltar** ou **c + Enter = comparar métodos** (lista de mensagens / área do Telegram, elementos visíveis e TextPattern — este pode levar alguns segundos). Envie esses números se algo estiver lento.
 7. **LOCAL DO SNIPER** (v1.4.8, aparece só com o Método **LEITURA DE TELA**; a CAPTURA não muda):
    - **DISCORD** — lê só a lista de mensagens do canal aberto (sem servidores, canais, membros e botões de reação).
    - **TELEGRAM** — lê só as mensagens da conversa aberta no Telegram Web (web.telegram.org/a ou /k): a lista de conversas com as prévias, o cabeçalho e a caixa de mensagem ficam de fora — assim o bot não compra um contrato que aparece na prévia de outra conversa.
    - **OUTRO** — lê tudo o que estiver visível na janela (padrão; era o comportamento até a v1.4.7).
    - Em DISCORD/TELEGRAM, se a área de mensagens não for encontrada o bot **não lê nada** (avisa no log e no Testar e tenta de novo); ele nunca passa a ler a página inteira nesses LOCAIS.
-6. **Testar** — usa o método escolhido e mostra o texto lido, os endereços encontrados (Solana e Robinhood) e o tempo da leitura.
+   - **Usa Discord? Escolha LOCAL = DISCORD.** O padrão é OUTRO (lê também servidores, canais e membros visíveis). Usa Telegram Web? Escolha TELEGRAM.
 
 Dicas: deixe o Discord **aberto e rolado até o fim** (mensagens mais novas embaixo). No modo janela com CAPTURA, **não minimize** o Discord (minimizado o Windows não desenha a janela; o bot avisa e espera ela voltar). Se a prévia sair preta, use **TODA ÁREA** ou a **LEITURA DE TELA**. **ESPAÇO + Enter = voltar.**
 
@@ -432,7 +451,7 @@ Como funciona:
 - A **Verificação secundária** (menu 10), o **Auto Sell** e o painel **Posições abertas** funcionam igual aos outros monitores.
 - Dica: use um RPC próprio (Helius) — o público tem limite baixo de requisições.
 
-**5) Iniciar monitoramento** — pede o **valor por compra em SOL** (Enter = último valor; 0 = cancelar) e começa a vigiar X, sites, tela e wallet (os que estiverem ligados). A tela mostra:
+**5) Iniciar monitoramento** — pede o **valor por compra** em SOL (padrão 0.01) ou ETH na Robinhood (padrão 0.001) (Enter = último valor; 0 = cancelar) e começa a vigiar X, sites, tela e wallet (os que estiverem ligados). A tela mostra:
 - o painel **Posições abertas**, com **uma linha por posição**: número, token (símbolo/nome ou contrato curto), quantidade, preço de entrada, preço atual (SOL por token, atualizado em tempo real), **P/L %** (verde/vermelho) e status;
 - o painel **Eventos** só com o que importa (posts, compras, vendas, erros) — a checagem de preço não enche mais a tela;
 - a linha de teclas: **`V = vender  |  Q = parar monitoramento (ou Ctrl+C)`**.
@@ -448,32 +467,41 @@ A venda usa o mesmo caminho do Auto Sell (Jupiter → PumpPortal, priority fee, 
 
 **6) Cadastrar private key** — cole a chave da carteira dedicada (veja [Credenciais › 1](#1-private-key-da-carteira-solana)).
 
-**7) Atualizar/ver saldo** — mostra o endereço da carteira e o saldo em SOL (o saldo também atualiza sozinho no topo).
+**7) Atualizar/ver saldo** — mostra o endereço da carteira e o saldo em SOL (ou ETH na Robinhood) (o saldo também atualiza sozinho no topo).
 
-**8) Configurações (slippage/priority fee/Jito/RPC)**
-1. Slippage (%) — quanto o preço pode variar na compra (tokens novos: 15–30%).
-2. Priority fee (SOL) — taxa extra para entrar mais rápido.
-3. Jito bundle — liga/desliga o envio pelo Jito.
-4. Jito tip / bribe (SOL) — gorjeta paga ao Jito.
-5. RPC / endpoint — sua URL da Helius (ou `-` para o público).
-6. Jupiter API key.
-7. Tentativas de cotação — quantas vezes tentar cotar um token recém-criado.
-8. Intervalo entre tentativas (s).
-9. Fallback PumpPortal — se o Jupiter falhar, compra pela PumpPortal.
+**8) Configurações (slippage/priority fee/Jito/RPC)** — com a rede **Solana** ativa (Robinhood: veja abaixo)
+1. Slippage (%) — quanto o preço pode variar na compra (padrão 15; tokens novos: 15–30%).
+2. Priority fee (SOL) — taxa extra para entrar mais rápido (padrão 0.0005).
+3. Jito bundle — liga/desliga o envio pelo Jito (padrão desligado).
+4. Jito tip / bribe (SOL) — gorjeta fixa paga ao Jito (padrão 0.001).
+5. RPC / endpoint — sua URL da Helius (ou `-` para o público `https://api.mainnet-beta.solana.com`, o padrão).
+6. Jupiter API key (opcional; vazio = `lite-api.jup.ag` grátis).
+7. Tentativas de cotação — quantas vezes tentar cotar um token recém-criado (padrão 10).
+8. Intervalo entre tentativas (s) (padrão 0.5).
+9. Fallback PumpPortal — se o Jupiter falhar, compra pela PumpPortal (padrão ligado).
 10. Pool PumpPortal — `auto` (recomendado), `pump`, `bonk`, `raydium`, `pump-amm`, `launchlab`…
-11. **Enviar por RPC + Jito ao mesmo tempo** — envio duplo da mesma transação (só vale com Jito ligado).
-12. **Contrato termina em "pump" → comprar pela PumpPortal** — rota direta para tokens pump.fun (reserva: Jupiter).
+11. **Enviar por RPC + Jito ao mesmo tempo** — envio duplo da mesma transação (padrão ON; só vale com Jito ligado).
+12. **Contrato termina em "pump" → comprar pela PumpPortal** — rota direta para tokens pump.fun (reserva: Jupiter; padrão OFF).
+
+**8) Configurações — Robinhood Chain** (com a rede Robinhood ativa; gas em gwei, aceita decimal):
+1. Slippage de compra (%) (padrão 15). 2. Max fee (gwei; `0` = automático pela base fee, padrão). 3. Priority fee (gwei; normalmente 0).
+4. Teto rígido do max fee (padrão 1 gwei). 5. Gas limit (padrão 600000). 6. RPC HTTP (padrão o público `https://rpc.mainnet.chain.robinhood.com`; ex. Alchemy).
+7. RPC WSS (vazio/`-` = derivado do RPC HTTP; sem WSS a SNIPER WALLET varre blocos a cada 250 ms). 8. Sequenciador. 9. Enviar também pelo sequenciador (ON).
+10. `eth_sendRawTransactionSync` no RPC (ON). 11. Rota de compra (`direct` padrão / `kyber` / `uniswap`). 12. Checagem honeypot em paralelo (ON, só avisa).
+13. Taxa máxima aceitável no aviso honeypot (padrão 15%). 14. Pré-aprovar o roteador após a compra (ON). 15. Feed do sequenciador (**experimental**, OFF).
 
 **Configurações recomendadas (Solana)**: slippage 15–30%, RPC próprio (Helius), Jupiter API key. Na opção **10) Verificação
 secundária**: **CRIAÇÃO MÁXIMA ON com 1–2 min** (X/site/tela) e **MCAP MÁXIMO ON** com o teto que você aceita pagar (ex.: `50k`).
 
-**9) Auto Sell** — 1) liga/desliga, 2) % dos tokens a vender, 3) % de lucro alvo (100 = 2x), 4) intervalo de checagem de preço, 5) slippage de venda, 6) ver posições (com **V** para vender uma posição aberta: parte ou tudo), 7) excluir posição (só do rastreio, não vende), 8) excluir todas as fechadas.
+**9) Auto Sell** — 1) liga/desliga (padrão OFF), 2) % dos tokens a vender (padrão 100), 3) % de lucro alvo (100 = 2x, padrão), 4) intervalo de checagem de preço (padrão 3 s), 5) slippage de venda (começa igual ao de compra), 6) ver posições (com **V** para vender uma posição aberta: parte ou tudo), 7) excluir posição (só do rastreio, não vende), 8) excluir todas as fechadas.
 
-**10) Verificação secundária** — nome: 1) liga/desliga, 2) adicionar palavra, 3) remover palavra, 4) listar, 5) testar com um contrato; 6/7) CRIAÇÃO MÁXIMA; 8/9) MCAP MÁXIMO ([detalhes](#️-verificação-secundária-v142--opção-10-nome-criação-máxima-e-mcap-máximo-solana-e-robinhood)). Com ela ligada e pelo menos uma palavra, o bot só compra se o nome ou símbolo do token contiver uma das palavras (sem diferenciar maiúsculas/acentos). Se o nome não puder ser obtido, não compra. Lista vazia = não bloqueia nada.
+**10) Verificação secundária** — nome: 1) liga/desliga, 2) adicionar palavra, 3) remover palavra, 4) listar, 5) testar com um contrato; 6/7) CRIAÇÃO MÁXIMA (padrão OFF, 60 s); 8/9) MCAP MÁXIMO (padrão OFF, $50k) ([detalhes](#️-verificação-secundária-v142--opção-10-nome-criação-máxima-e-mcap-máximo-solana-e-robinhood)). Com ela ligada e pelo menos uma palavra, o bot só compra se o nome ou símbolo do token contiver uma das palavras (sem diferenciar maiúsculas/acentos). Se o nome não puder ser obtido, não compra. Lista vazia = não bloqueia nada.
 
 **11) Atualizar** — verifica e instala a versão nova manualmente (normalmente não precisa: o bot se atualiza sozinho ao abrir). Quando há versão nova, o topo mostra **"Nova versão vX.Y.Z disponível"**.
 
-**12) Assinatura** — status da licença (teste grátis / assinatura), vencimento, **Seu ID**, **1) Renovar** (30 USDC = +30 dias), **2) Já paguei, verificar** (quando há pagamento pendente) e **3) Atualizar licença pelo servidor**.
+**12) Assinatura** — status da licença (teste grátis de 3 dias / assinatura), vencimento, **Seu ID**, **1) Renovar** (30 USDC = +30 dias), **2) Já paguei, verificar** (quando há pagamento pendente) e **3) Atualizar licença pelo servidor**.
+
+**13) MUDAR REDE** — 1) Solana ou 2) Robinhood Chain ([detalhes](#-robinhood-chain-v140--opção-13-mudar-rede)).
 
 **0) Sair** — fecha o bot.
 
