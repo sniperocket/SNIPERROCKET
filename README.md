@@ -36,6 +36,13 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 
 ---
 
+## 💲 Cotação no rodapé do menu (v1.4.3)
+
+A última linha do menu principal mostra o preço em dólar da moeda da rede ativa e há quanto tempo foi atualizado, por exemplo
+`SOL U$105,03 1min` (Solana) ou `ETH U$3.456,78 15s` (Robinhood). A cotação é atualizada a cada 60 s (Coinbase, Binance ou Kraken)
+sempre que o bot está aberto, mesmo com o MCAP MÁXIMO desligado, e o menu se redesenha sozinho quando ela muda (sem atrapalhar a
+digitação). Enquanto não houver cotação aparece `SOL U$ -- (sem cotação)`. Não atrasa as compras.
+
 ## 🛡️ Verificação secundária (v1.4.2) — opção 10: nome, CRIAÇÃO MÁXIMA e MCAP MÁXIMO (Solana e Robinhood)
 
 A opção **10) Verificação secundária** agora reúne os três filtros, cada um com seu próprio ON/OFF (a tela mostra a rede
