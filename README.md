@@ -20,6 +20,7 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 
 | Versão | O que mudou |
 |---|---|
+| **v1.5.0** | **SNIPER TELA 2**: uma segunda tela independente — o bot vigia **duas janelas ao mesmo tempo** (ex.: Discord + Telegram). SNIPER TELA → **t + Enter** troca entre **TELA 1** e **TELA 2**; cada uma tem janela/modo, método, LOCAL DO SNIPER, intervalo, ON/OFF e Testar próprios. As duas rodam em paralelo (uma não atrasa a outra). Um contrato que aparece nas duas telas (ou de novo na mesma) é comprado **uma vez só**, pela tela que viu primeiro; o log mostra `via tela 1` / `via tela 2`. A TELA 2 vem **desligada**; sua configuração atual (TELA 1) não muda. |
 | **v1.4.9** | **LOCAL TELEGRAM** mais robusto no Telegram Web A: quando a área de mensagens não aparece na árvore, filtra a página (tira abas de pastas, lista de conversas com prévias, cabeçalho até "last seen/online/membros" e a caixa "Mensagem"). **6) Testar** → **d + Enter** salva a árvore UIA em `config/logs/uia-dump-<hora>.txt` (o aviso "área de mensagens não encontrada" já salva sozinho) — envie ao suporte. Menu principal mostra **SUPORTE TELEGRAM @SNIPEROCKET** no canto inferior direito do quadro. |
 | **v1.4.8** | SNIPER TELA → **7) LOCAL DO SNIPER** (só com LEITURA DE TELA): **DISCORD** (só a lista de mensagens), **TELEGRAM** (só a conversa aberta no Telegram Web) ou **OUTRO** (tudo visível). **6) Testar** rápido: roda só o método em uso; **c + Enter** compara os métodos. |
 | **v1.4.7** | LEITURA DE TELA no Chrome/Discord bem mais rápida: lê a lista de mensagens visível numa única consulta (o método antigo, lento, só como último recurso). |
@@ -433,6 +434,11 @@ Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0`
    - **OUTRO** — lê tudo o que estiver visível na janela (padrão; era o comportamento até a v1.4.7).
    - Em DISCORD/TELEGRAM, se a área de mensagens não for encontrada o bot **não lê nada** (avisa no log e no Testar e tenta de novo); ele nunca passa a ler a página inteira nesses LOCAIS.
    - **Usa Discord? Escolha LOCAL = DISCORD.** O padrão é OUTRO (lê também servidores, canais e membros visíveis). Usa Telegram Web? Escolha TELEGRAM.
+
+**TELA 1 / TELA 2** (v1.5.0) — no topo do SNIPER TELA aparece `TELA 1 ON   TELA 2 OFF`; a destacada é a que você está editando. Digite **t + Enter** para trocar. Todas as opções acima (1 a 7) valem só para a tela em edição — a TELA 2 tem janela, modo, método, LOCAL, intervalo e ON/OFF próprios, e o **6) Testar** testa a tela em edição.
+- **Para ligar a TELA 2:** 3) SNIPER TELA → **t + Enter** (título vira "SNIPER TELA — TELA 2") → **2) Modo de captura** (escolha a 2ª janela, ex.: Telegram) → **3) Método** / **7) LOCAL DO SNIPER** se quiser → **6) Testar** → **1)** para deixar **ON** → 5) Iniciar monitoramento.
+- As duas telas são vigiadas **ao mesmo tempo** (cada uma no seu ritmo). O cabeçalho mostra `Tela ON Tela2 ON` e o monitoramento `Tela: ON (1 + 2)`.
+- **Compra em um lugar só:** um contrato visto nas duas telas (ou visto de novo) é comprado **uma única vez**, pela tela que detectou primeiro; a outra registra no log `já detectado por TELA N — não compra de novo`. A trava da sessão (1 compra por sessão) continua valendo para todos os monitores.
 
 Dicas: deixe o Discord **aberto e rolado até o fim** (mensagens mais novas embaixo). No modo janela com CAPTURA, **não minimize** o Discord (minimizado o Windows não desenha a janela; o bot avisa e espera ela voltar). Se a prévia sair preta, use **TODA ÁREA** ou a **LEITURA DE TELA**. **ESPAÇO + Enter = voltar.**
 
