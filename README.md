@@ -20,7 +20,8 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 
 | Versão | O que mudou |
 |---|---|
-| **v1.5.1** | **SNIPER PUMPFUN** (só Solana, opção **14**): vê **todo token lançado na pump.fun** em tempo real e compra na hora conforme dois filtros próprios: **NOME CONTEM PALAVRA** e **TICKER CONTEM PALAVRA** (cada um com palavra e ON/OFF próprios, sem diferenciar maiúsculas). Só um ON: só ele precisa casar; os dois ON: compra só se **os dois** casarem; os dois OFF: nunca compra. Fonte: **PumpPortal** (grátis, sem chave); se ela cair e não voltar em **5 s**, o bot usa o **RPC das suas Configurações** (opção 8) e volta para a PumpPortal sozinho — a fonte ativa aparece na tela. **TESTE** mostra os 5 últimos lançamentos ao vivo marcando os que comprariam (nunca compra). **Não usa a Verificação secundária de nome (opção 10)** — só os seus filtros NOME/TICKER; MCAP MÁXIMO continua valendo. Vem **desligado**; sua configuração não muda. Log: `via pumpfun (nome "...")`. |
+| **v1.5.2** | **Só renumeração do menu principal**: o **SNIPER PUMPFUN** passou da opção 14 para a **5** (logo abaixo do SNIPER WALLET CONFIG) e as opções que eram 5 ou mais **subiram uma casa**, mantendo a ordem e o funcionamento: **6) Iniciar monitoramento**, **7) Cadastrar private key**, **8) Atualizar/ver saldo**, **9) Configurações**, **10) Auto Sell**, **11) Verificação secundária**, **12) Atualizar**, **13) Assinatura**, **14) MUDAR REDE**. As mensagens e dicas na tela e este guia usam os números novos. Nenhuma configuração mudou: sua pasta `config` é mantida como está. O menu é o mesmo na Solana e na Robinhood Chain; o PUMPFUN continua só para Solana (na Robinhood a opção 5 abre a tela com o aviso "Só Solana", como antes). |
+| **v1.5.1** | **SNIPER PUMPFUN** (só Solana, opção **5**): vê **todo token lançado na pump.fun** em tempo real e compra na hora conforme dois filtros próprios: **NOME CONTEM PALAVRA** e **TICKER CONTEM PALAVRA** (cada um com palavra e ON/OFF próprios, sem diferenciar maiúsculas). Só um ON: só ele precisa casar; os dois ON: compra só se **os dois** casarem; os dois OFF: nunca compra. Fonte: **PumpPortal** (grátis, sem chave); se ela cair e não voltar em **5 s**, o bot usa o **RPC das suas Configurações** (opção 9) e volta para a PumpPortal sozinho — a fonte ativa aparece na tela. **TESTE** mostra os 5 últimos lançamentos ao vivo marcando os que comprariam (nunca compra). **Não usa a Verificação secundária de nome (opção 11)** — só os seus filtros NOME/TICKER; MCAP MÁXIMO continua valendo. Vem **desligado**; sua configuração não muda. Log: `via pumpfun (nome "...")`. |
 | **v1.5.0** | **SNIPER TELA 2**: uma segunda tela independente — o bot vigia **duas janelas ao mesmo tempo** (ex.: Discord + Telegram). SNIPER TELA → **t + Enter** troca entre **TELA 1** e **TELA 2**; cada uma tem janela/modo, método, LOCAL DO SNIPER, intervalo, ON/OFF e Testar próprios. As duas rodam em paralelo (uma não atrasa a outra). Um contrato que aparece nas duas telas (ou de novo na mesma) é comprado **uma vez só**, pela tela que viu primeiro; o log mostra `via tela 1` / `via tela 2`. A TELA 2 vem **desligada**; sua configuração atual (TELA 1) não muda. |
 | **v1.4.9** | **LOCAL TELEGRAM** mais robusto no Telegram Web A: quando a área de mensagens não aparece na árvore, filtra a página (tira abas de pastas, lista de conversas com prévias, cabeçalho até "last seen/online/membros" e a caixa "Mensagem"). **6) Testar** → **d + Enter** salva a árvore UIA em `config/logs/uia-dump-<hora>.txt` (o aviso "área de mensagens não encontrada" já salva sozinho) — envie ao suporte. Menu principal mostra **SUPORTE TELEGRAM @SNIPEROCKET** no canto inferior direito do quadro. |
 | **v1.4.8** | SNIPER TELA → **7) LOCAL DO SNIPER** (só com LEITURA DE TELA): **DISCORD** (só a lista de mensagens), **TELEGRAM** (só a conversa aberta no Telegram Web) ou **OUTRO** (tudo visível). **6) Testar** rápido: roda só o método em uso; **c + Enter** compara os métodos. |
@@ -29,9 +30,9 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 | **v1.4.5** | LEITURA DE TELA no Chrome/Edge/Brave/Opera e no app do Discord: lê o conteúdo da página (antes lia só os botões do navegador). |
 | **v1.4.4** | SNIPER TELA → **3) Método**: **CAPTURA DE TELA** (print + OCR, padrão) ou **LEITURA DE TELA** (texto direto da janela, sem OCR). |
 | **v1.4.3** | **Cotação no rodapé** do menu principal (ex.: `SOL U$105,03 1min`), atualizada a cada 60 s. |
-| **v1.4.2** | **10) Verificação secundária** reúne nome, **CRIAÇÃO MÁXIMA** (itens 6/7) e o novo **MCAP MÁXIMO** (itens 8/9); as checagens rodam em paralelo com a compra. |
+| **v1.4.2** | **11) Verificação secundária** reúne nome, **CRIAÇÃO MÁXIMA** (itens 6/7) e o novo **MCAP MÁXIMO** (itens 8/9); as checagens rodam em paralelo com a compra. |
 | **v1.4.1** | **CRIAÇÃO MÁXIMA**: não compra token criado há mais que o limite (X, site e tela; Solana e Robinhood). |
-| **v1.4.0** | **Robinhood Chain**: opção **13) MUDAR REDE** (configurações separadas por rede). |
+| **v1.4.0** | **Robinhood Chain**: opção **14) MUDAR REDE** (configurações separadas por rede). |
 
 ## O que o bot faz
 
@@ -48,7 +49,7 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 | **Auto Sell** | Vende automaticamente uma porcentagem dos tokens quando o lucro alvo é atingido (ex.: 100% = preço dobrou). |
 | **Venda manual** | Durante o monitoramento, aperte **V** para vender uma parte (%) ou tudo de uma posição aberta, sem parar o bot. |
 | **Verificação secundária** | Opcional: confere **nome/símbolo** (palavras suas), **CRIAÇÃO MÁXIMA** (idade do token) e **MCAP MÁXIMO** (market cap em USD), em paralelo com a compra. |
-| **Duas redes** | **Solana** ou **Robinhood Chain** (opção 13), cada uma com sua carteira e configurações. |
+| **Duas redes** | **Solana** ou **Robinhood Chain** (opção 14), cada uma com sua carteira e configurações. |
 | **Cotação no rodapé** | Preço SOL/ETH em dólar e idade da cotação na última linha do menu. |
 | **Atualização automática** | Ao abrir, o bot verifica se existe versão nova e se atualiza sozinho, mantendo suas configurações. |
 | **Assinatura** | **3 dias grátis** no primeiro uso; depois **30 USDC por 30 dias**, pago dentro do próprio bot (veja [Assinatura](#-assinatura)). |
@@ -62,9 +63,9 @@ A última linha do menu principal mostra o preço em dólar da moeda da rede ati
 sempre que o bot está aberto, mesmo com o MCAP MÁXIMO desligado, e o menu se redesenha sozinho quando ela muda (sem atrapalhar a
 digitação). Enquanto não houver cotação aparece `SOL U$ -- (sem cotação)`. Não atrasa as compras.
 
-## 🛡️ Verificação secundária (v1.4.2) — opção 10: nome, CRIAÇÃO MÁXIMA e MCAP MÁXIMO (Solana e Robinhood)
+## 🛡️ Verificação secundária (v1.4.2) — opção 11: nome, CRIAÇÃO MÁXIMA e MCAP MÁXIMO (Solana e Robinhood)
 
-A opção **10) Verificação secundária** agora reúne os três filtros, cada um com seu próprio ON/OFF (a tela mostra a rede
+A opção **11) Verificação secundária** agora reúne os três filtros, cada um com seu próprio ON/OFF (a tela mostra a rede
 ativa; idade e MCAP são separados por rede). Todos vêm **OFF**; valores já salvos são mantidos. **ESPAÇO + Enter = voltar.**
 
 | Item | O que faz | Vale para |
@@ -83,17 +84,17 @@ ativa; idade e MCAP são separados por rede). Todos vêm **OFF**; valores já sa
 - **Falhou ou demorou (> 4 s)? Não compra** e nada é enviado; o motivo aparece no painel Eventos, ex.:
   `[SOL] [mcap] … MCAP $7.5k (limite $50.0k) — ok` / `[RH] [idade] … criado há mais de 1.0 min — NÃO comprado (CRIAÇÃO MÁXIMA)`.
 
-## 🟢 Robinhood Chain (v1.4.0) — opção 13) MUDAR REDE
+## 🟢 Robinhood Chain (v1.4.0) — opção 14) MUDAR REDE
 
-Na tela inicial, a coluna da direita tem **13) MUDAR REDE**: escolha **1) Solana** ou **2) Robinhood Chain**. O bot inteiro passa a
+Na tela inicial, a coluna da direita tem **14) MUDAR REDE**: escolha **1) Solana** ou **2) Robinhood Chain**. O bot inteiro passa a
 usar a rede escolhida (fica salva). Cada rede tem a **sua própria** private key, RPC, valor de compra, slippage, gas e carteiras
 vigiadas — trocar de rede **nunca apaga nem altera** as configurações da outra. O cabeçalho mostra a rede ativa e toda linha de
 compra/venda no painel Eventos começa com `[SOL]` ou `[RH]`.
 
 Na Robinhood Chain (EVM, chain ID 4663, gas pago em **ETH**):
-- **6) Cadastrar private key**: chave EVM (64 caracteres hex, com ou sem `0x`) de uma carteira **nova e dedicada** (ex.: MetaMask/Rabby → Exportar chave privada).
-- **7) Saldo**: em ETH. **Valor por compra**: em ETH.
-- **8) Configurações**: slippage, **max fee em gwei** (aceita decimal, ex.: `0.05`; `0` = automático pela base fee, hoje ~0.02 gwei),
+- **7) Cadastrar private key**: chave EVM (64 caracteres hex, com ou sem `0x`) de uma carteira **nova e dedicada** (ex.: MetaMask/Rabby → Exportar chave privada).
+- **8) Saldo**: em ETH. **Valor por compra**: em ETH.
+- **9) Configurações**: slippage, **max fee em gwei** (aceita decimal, ex.: `0.05`; `0` = automático pela base fee, hoje ~0.02 gwei),
   priority fee (gwei, normalmente 0), **teto rígido** do max fee, gas limit, RPC (público `https://rpc.mainnet.chain.robinhood.com`,
   ou Alchemy `https://robinhood-mainnet.g.alchemy.com/v2/SUA_CHAVE`), RPC WSS (`wss://robinhood-mainnet.g.alchemy.com/v2/SUA_CHAVE`),
   sequenciador, rota de compra, checagem honeypot, pré-aprovação para venda. Não existem Jito, priority fee em SOL, Jupiter nem PumpPortal nesta rede.
@@ -105,7 +106,7 @@ Na Robinhood Chain (EVM, chain ID 4663, gas pago em **ETH**):
 - **Velocidade**: a rede é "primeiro a chegar" (sem leilão de prioridade, por isso não há Jito). O bot assina localmente, deixa nonce,
   base fee e conexões prontos e envia a mesma transação ao **sequenciador** e ao **RPC** ao mesmo tempo. Após a compra, já aprova o roteador para a venda sair rápido.
 - **Configurações recomendadas (Robinhood)**: slippage 15–30%, max fee `0` (automático) com teto 1 gwei, RPC + WSS da Alchemy,
-  rota `direct`. Na opção **10) Verificação secundária** (com a rede Robinhood ativa): **CRIAÇÃO MÁXIMA ON com 1–2 min** e
+  rota `direct`. Na opção **11) Verificação secundária** (com a rede Robinhood ativa): **CRIAÇÃO MÁXIMA ON com 1–2 min** e
   **MCAP MÁXIMO ON** (ex.: `50k`).
 - Explorer: https://robinhoodchain.blockscout.com
 
@@ -126,7 +127,7 @@ O programa é instalado em `%LOCALAPPDATA%\SniperRocket` (pasta do seu usuário)
 - **São automáticas.** Toda vez que você abre o bot, ele verifica se há uma versão nova aqui no GitHub. Se houver, aparece **"Atualizando para vX.Y.Z..."**, o bot baixa o instalador, fecha, instala em segundo plano e **abre de novo sozinho** já na versão nova.
 - A verificação acontece **só na abertura**: o bot **nunca se atualiza durante o monitoramento**.
 - Se a atualização falhar (sem internet, antivírus bloqueou etc.), o bot apenas registra no log e **continua normalmente** na versão atual.
-- Também existe a opção **11) Atualizar** no menu, para verificar/instalar manualmente.
+- Também existe a opção **12) Atualizar** no menu, para verificar/instalar manualmente.
 - **Suas configurações são preservadas**: a atualização só troca o `sniper.exe`; a pasta `config` (chave, tokens, perfis, posições, logs) nunca é apagada nem sobrescrita.
 - A versão atual aparece no topo da tela (ex.: `Sniper X → Solana v1.4.9`).
 
@@ -140,17 +141,17 @@ O programa é instalado em `%LOCALAPPDATA%\SniperRocket` (pasta do seu usuário)
 - No dia a dia o bot confere a licença **no próprio computador** (não depende do servidor). Não altere a data/hora do Windows para trás: o bot detecta e mostra **"Relógio do sistema alterado"** (acerte o relógio e escolha "Tentar novamente").
 
 ### Como pagar
-1. Quando o teste ou o plano vence, aparece a tela **CONTRATE UM PLANO — 30 USDC por 30 dias — COMPRAR 1) SIM 2) NÃO** (2 fecha o bot). Para renovar antes, use o menu **12) Assinatura → 1) Renovar**.
+1. Quando o teste ou o plano vence, aparece a tela **CONTRATE UM PLANO — 30 USDC por 30 dias — COMPRAR 1) SIM 2) NÃO** (2 fecha o bot). Para renovar antes, use o menu **13) Assinatura → 1) Renovar**.
 2. Escolha **1) SIM** e informe a **carteira Solana de onde o pagamento vai sair** (a sua Phantom/Solflare etc.) e confirme.
 3. Aparece **"VOCÊ TEM 10 MINUTOS PARA PAGAR"** com a carteira de destino e uma contagem regressiva. Envie, **da carteira informada** e numa **única transação**, **30 USDC** (rede **Solana**; token USDC, mint `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`) para:
    **`2XpTn1mXAittaMBsmjS43HPWCo3ycAaM5NUt211ov9jb`**
 4. O bot verifica sozinho a cada poucos segundos e **libera automaticamente** quando o pagamento é confirmado na blockchain.
-5. Pagou mas o tempo acabou? O pagamento é aceito **até 60 minutos** depois de iniciar: use **"Já paguei, verificar"** (na tela de bloqueio ou no menu 12) ou simplesmente abra o bot de novo.
+5. Pagou mas o tempo acabou? O pagamento é aceito **até 60 minutos** depois de iniciar: use **"Já paguei, verificar"** (na tela de bloqueio ou no menu 13) ou simplesmente abra o bot de novo.
 
 > Envie da carteira que você informou (não de uma corretora), na rede Solana. Pagamentos de outra carteira, de outro token ou abaixo de 30 USDC não são reconhecidos automaticamente.
 
 ### Seu ID
-O menu **12) Assinatura** mostra o status, a data de vencimento e o **Seu ID** (código curto deste PC, ex.: `A1B2C3D4E5`; também aparece no menu e na tela de pagamento). Informe o **Seu ID** ao suporte sempre que precisar de ajuda com a licença. Se o suporte adicionar dias para você, use **12 → 3) Atualizar licença pelo servidor**.
+O menu **13) Assinatura** mostra o status, a data de vencimento e o **Seu ID** (código curto deste PC, ex.: `A1B2C3D4E5`; também aparece no menu e na tela de pagamento). Informe o **Seu ID** ao suporte sempre que precisar de ajuda com a licença. Se o suporte adicionar dias para você, use **13 → 3) Atualizar licença pelo servidor**.
 
 ---
 
@@ -164,9 +165,9 @@ Tudo o que você colar no bot fica salvo **só no seu computador**, em `%LOCALAP
 
 | # | Credencial | Obrigatória? | Onde conseguir | Onde colar no bot |
 |---|---|---|---|---|
-| 1 | Private key da carteira Solana | **Sim** | Phantom ou Solflare | Menu **6) Cadastrar private key** |
-| 2 | URL do RPC (Helius) | Não, mas **muito recomendada** | [dashboard.helius.dev](https://dashboard.helius.dev) | Menu **8** → item **5) RPC / endpoint** |
-| 3 | Jupiter API key | Não, mas **recomendada** | [developers.jup.ag/portal](https://developers.jup.ag/portal) | Menu **8** → item **6) Jupiter API key** |
+| 1 | Private key da carteira Solana | **Sim** | Phantom ou Solflare | Menu **7) Cadastrar private key** |
+| 2 | URL do RPC (Helius) | Não, mas **muito recomendada** | [dashboard.helius.dev](https://dashboard.helius.dev) | Menu **9** → item **5) RPC / endpoint** |
+| 3 | Jupiter API key | Não, mas **recomendada** | [developers.jup.ag/portal](https://developers.jup.ag/portal) | Menu **9** → item **6) Jupiter API key** |
 | 4 | X (Twitter) Bearer Token | Só se usar o monitor do X | [console.x.com](https://console.x.com) | Menu **1) SNIPER X CONFIG** → item **2) Bearer Token** |
 | 5 | PumpPortal | **Não precisa de nada** | — | — |
 
@@ -220,9 +221,9 @@ Exportar a private key:
 
 #### Colar no bot
 
-1. No menu principal, digite **`6`** (**Cadastrar private key**) e Enter.
+1. No menu principal, digite **`7`** (**Cadastrar private key**) e Enter.
 2. Cole a chave (ela **não aparece** na tela — é normal) e aperte Enter.
-3. Deve aparecer **"Chave salva."** e o saldo passa a aparecer no canto superior direito. Confira o endereço no menu **7) Saldo** — ele deve ser o mesmo da sua conta na Phantom/Solflare.
+3. Deve aparecer **"Chave salva."** e o saldo passa a aparecer no canto superior direito. Confira o endereço no menu **8) Saldo** — ele deve ser o mesmo da sua conta na Phantom/Solflare.
 4. Depois de colar, **apague a chave da área de transferência** copiando qualquer outro texto.
 
 #### Cuidados de segurança
@@ -230,7 +231,7 @@ Exportar a private key:
 - Ninguém do suporte vai pedir sua private key ou frase de recuperação. **Quem pede é golpista.**
 - Não guarde a chave em print, e-mail, WhatsApp ou nuvem.
 - Deixe na carteira do bot só o necessário. Quando quiser, transfira o lucro para a sua carteira principal.
-- Se desconfiar que a chave vazou: crie outra carteira, transfira tudo para ela **imediatamente** e cadastre a chave nova no menu 6.
+- Se desconfiar que a chave vazou: crie outra carteira, transfira tudo para ela **imediatamente** e cadastre a chave nova no menu 7.
 
 #### Erros comuns
 | Problema | Causa / solução |
@@ -238,7 +239,7 @@ Exportar a private key:
 | **"Chave inválida"** | Você colou as **12/24 palavras**, o **endereço** da carteira, a chave de outra rede (Ethereum) ou a chave saiu cortada/com espaço. Copie de novo a chave da rede **Solana**. |
 | A chave está no formato `[12,34,56,...]` (lista de números) | Esse formato não é aceito. Exporte pela Phantom/Solflare, que mostra o formato base58. |
 | "Mostrar chave privada" não aparece na Phantom | A carteira foi criada com login do Google/Apple ou é uma carteira de hardware (Ledger). Crie uma conta nova com frase de recuperação. |
-| O saldo aparece **0** | Você exportou a chave de outra conta, ou ainda não enviou SOL para ela. Compare o endereço do menu 7 com o da carteira. |
+| O saldo aparece **0** | Você exportou a chave de outra conta, ou ainda não enviou SOL para ela. Compare o endereço do menu 8 com o da carteira. |
 
 ---
 
@@ -249,8 +250,8 @@ Exportar a private key:
 **É obrigatório?** **Não.** Sem configurar, o bot usa o RPC público da Solana (`https://api.mainnet-beta.solana.com`), que funciona, mas é **lento e com limite baixo**. Um RPC próprio deixa as compras **mais rápidas e confiáveis** — **recomendado**.
 
 > **RPC × endpoint da Jupiter — qual a diferença?**
-> - **RPC (Helius)** = a "estrada" até a blockchain Solana: lê saldo e **envia** a transação. Vai no **menu 8 → item 5**.
-> - **Endpoint/rota da Jupiter** = o "corretor" que **calcula o melhor preço** e **monta** a transação de compra. Usa a **Jupiter API key** (seção 3), **menu 8 → item 6**.
+> - **RPC (Helius)** = a "estrada" até a blockchain Solana: lê saldo e **envia** a transação. Vai no **menu 9 → item 5**.
+> - **Endpoint/rota da Jupiter** = o "corretor" que **calcula o melhor preço** e **monta** a transação de compra. Usa a **Jupiter API key** (seção 3), **menu 9 → item 6**.
 > São coisas diferentes: **não cole a URL da Helius no campo da Jupiter**, nem o contrário.
 
 #### Passo a passo
@@ -265,13 +266,13 @@ Exportar a private key:
 6. **Copie a URL inteira**, começando em `https://` — não só a chave.
 
 #### Colar no bot
-1. No menu principal, digite **`8`** (**Configurações**) e Enter.
+1. No menu principal, digite **`9`** (**Configurações**) e Enter.
 2. Digite **`5`** (**RPC / endpoint**) e Enter.
 3. Cole a URL completa e aperte Enter. Deve aparecer **"RPC / endpoint salvo."**
-4. Volte (**0**) e confira se o saldo aparece no topo / no menu **7**.
+4. Volte (**0**) e confira se o saldo aparece no topo / no menu **8**.
 5. Para voltar ao RPC público a qualquer momento, repita os passos e digite apenas **`-`**.
 
-**Alternativas à Helius** (funcionam igual; basta colar a URL **Mainnet** da Solana que o painel delas fornece no mesmo menu 8 → 5): [QuickNode](https://www.quicknode.com), [Alchemy](https://www.alchemy.com/solana), [Triton](https://triton.one). Use apenas uma URL de **Solana Mainnet** que comece com `https://`.
+**Alternativas à Helius** (funcionam igual; basta colar a URL **Mainnet** da Solana que o painel delas fornece no mesmo menu 9 → 5): [QuickNode](https://www.quicknode.com), [Alchemy](https://www.alchemy.com/solana), [Triton](https://triton.one). Use apenas uma URL de **Solana Mainnet** que comece com `https://`.
 
 #### Erros comuns
 | Problema | Causa / solução |
@@ -306,10 +307,10 @@ Exportar a private key:
 7. A chave nova começa a funcionar em cerca de **15 segundos**.
 
 #### Colar no bot
-1. No menu principal, digite **`8`** (**Configurações**) e Enter.
+1. No menu principal, digite **`9`** (**Configurações**) e Enter.
 2. Digite **`6`** (**Jupiter API key**) e Enter.
 3. Cole a chave (ela **não aparece** enquanto cola) e aperte Enter. Deve aparecer **"Jupiter API key salva."**
-4. Na tela do menu 8, o item 6 passa a mostrar a chave mascarada (ex.: `abcd…wxyz`). Se aparecer **"(vazio = lite-api grátis)"**, a chave não foi salva.
+4. Na tela do menu 9, o item 6 passa a mostrar a chave mascarada (ex.: `abcd…wxyz`). Se aparecer **"(vazio = lite-api grátis)"**, a chave não foi salva.
 5. Para apagar a chave, repita e digite apenas **`-`**.
 
 Formato (exemplo, não é real): `SUA_JUPITER_API_KEY`
@@ -317,10 +318,10 @@ Formato (exemplo, não é real): `SUA_JUPITER_API_KEY`
 #### Erros comuns
 | Problema | Causa / solução |
 |---|---|
-| **401 / Unauthorized** | Chave errada, incompleta ou apagada no portal. Crie uma chave nova e cole de novo (menu 8 → 6). |
+| **401 / Unauthorized** | Chave errada, incompleta ou apagada no portal. Crie uma chave nova e cole de novo (menu 9 → 6). |
 | **403 / Forbidden** | A chave tem permissões restritas sem o produto **Swap**. Libere Swap no portal ou crie outra chave. |
-| **429 / 503** | Limite de requisições atingido ou Jupiter sobrecarregada. Cadastre a chave (se estiver sem), mantenha o **Fallback PumpPortal** ligado (menu 8 → 9) e ajuste as tentativas de cotação (menu 8 → 7/8). |
-| Colou a URL da Helius aqui | Errado: aqui vai **só a chave da Jupiter**. A URL da Helius vai no menu 8 → 5. |
+| **429 / 503** | Limite de requisições atingido ou Jupiter sobrecarregada. Cadastre a chave (se estiver sem), mantenha o **Fallback PumpPortal** ligado (menu 9 → 9) e ajuste as tentativas de cotação (menu 9 → 7/8). |
+| Colou a URL da Helius aqui | Errado: aqui vai **só a chave da Jupiter**. A URL da Helius vai no menu 9 → 5. |
 
 ---
 
@@ -366,7 +367,7 @@ Formato (exemplo, não é real): `SEU_BEARER_TOKEN_DO_X` — é um texto bem lon
 | **`stream`** (padrão, **recomendado**) | Conexão contínua (*filtered stream*): o X **empurra** o post para o bot assim que é publicado. | Quase sempre. É o mais rápido. |
 | **`polling`** | O bot **pergunta** ao X de tempos em tempos (intervalo no item **6**, em segundos) se há post novo. | Só se o stream não funcionar na sua conta. É mais lento e pode **gastar mais créditos** (cada consulta é cobrada). |
 
-As regras do stream (a lista de perfis) são enviadas ao X **automaticamente** quando você inicia o monitoramento (menu **5**).
+As regras do stream (a lista de perfis) são enviadas ao X **automaticamente** quando você inicia o monitoramento (menu **6**).
 
 #### Erros comuns
 | Problema | Causa / solução |
@@ -385,7 +386,7 @@ As regras do stream (a lista de perfis) são enviadas ao X **automaticamente** q
 
 O bot usa a API `trade-local` da [PumpPortal](https://pumpportal.fun) como **compra reserva** (quando a Jupiter falha) e na **rota "pump"** (contratos que terminam em `pump`). A transação é montada pela PumpPortal, mas **assinada no seu computador** com a sua chave — **a private key nunca é enviada**.
 
-Opções relacionadas (menu **8**): **9) Fallback PumpPortal**, **10) Pool PumpPortal** e **12) Contrato termina em "pump" → comprar pela PumpPortal**.
+Opções relacionadas (menu **9**): **9) Fallback PumpPortal**, **10) Pool PumpPortal** e **12) Contrato termina em "pump" → comprar pela PumpPortal**.
 
 ---
 
@@ -394,19 +395,19 @@ Opções relacionadas (menu **8**): **9) Fallback PumpPortal**, **10) Pool PumpP
 Ao abrir aparece o cabeçalho (versão, rede ativa, status de X/Sites/Tela/Wallet/Verificação e saldo) e o menu em **três colunas**. Digite o número e Enter.
 
 ```
-1) SNIPER X CONFIG          6) Cadastrar private key                    13) MUDAR REDE
-2) SNIPER SITE CONFIG       7) Atualizar/ver saldo                      Rede ativa:
-3) SNIPER TELA              8) Configurações (slippage/fee/Jito/RPC)    Solana
-4) SNIPER WALLET CONFIG     9) Auto Sell                                (SOL)
-                            10) Verificação secundária
-                            11) Atualizar (verificar nova versão)
-5) Iniciar monitoramento    12) Assinatura (Seu ID: XXXXXXXXXX)
+1) SNIPER X CONFIG          7) Cadastrar private key                    14) MUDAR REDE
+2) SNIPER SITE CONFIG       8) Atualizar/ver saldo                      Rede ativa:
+3) SNIPER TELA              9) Configurações (slippage/fee/Jito/RPC)    Solana
+4) SNIPER WALLET CONFIG     10) Auto Sell                               (SOL)
+5) SNIPER PUMPFUN           11) Verificação secundária
+                            12) Atualizar (verificar nova versão)
+6) Iniciar monitoramento    13) Assinatura (Seu ID: XXXXXXXXXX)
                             0) Sair
 ...
 SOL U$105,03 1min
 ```
 
-À esquerda ficam os quatro monitores (X, sites, tela e wallet) e o **5) Iniciar monitoramento**; no meio, carteira, configurações e o resto; à direita, **13) MUDAR REDE** e a rede ativa (com a Robinhood ativa, o item 8 vira "Configurações (slippage/gas gwei/RPC/rota)"). No canto inferior direito, dentro do quadro do menu, fica **SUPORTE TELEGRAM @SNIPEROCKET** (v1.4.9) — fale com o suporte por lá. A **última linha** é a [cotação no rodapé](#-cotação-no-rodapé-do-menu-v143). **Atenção (v1.3.0): os números da coluna da direita mudaram** — private key agora é 6, saldo 7, configurações 8, Auto Sell 9, verificação 10, atualizar 11 e assinatura 12.
+À esquerda ficam os cinco monitores (X, sites, tela, wallet e **5) SNIPER PUMPFUN**, só Solana) e o **6) Iniciar monitoramento**; no meio, carteira, configurações e o resto; à direita, **14) MUDAR REDE** e a rede ativa (com a Robinhood ativa, o item 9 vira "Configurações (slippage/gas gwei/RPC/rota)"). No canto inferior direito, dentro do quadro do menu, fica **SUPORTE TELEGRAM @SNIPEROCKET** (v1.4.9) — fale com o suporte por lá. A **última linha** é a [cotação no rodapé](#-cotação-no-rodapé-do-menu-v143). **Atenção (v1.5.2): os números do menu mudaram** — o SNIPER PUMPFUN passou da opção 14 para a **5** e tudo o que era 5 ou mais subiu uma casa: Iniciar monitoramento **6**, private key **7**, saldo **8**, configurações **9**, Auto Sell **10**, verificação secundária **11**, atualizar **12**, assinatura **13** e MUDAR REDE **14**. A ordem e o funcionamento de cada opção continuam iguais.
 Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0` volta.
 
 **Tecla voltar (v1.3.3):** em qualquer menu, submenu ou campo (carteira, chave, %, valor…), digite **só um ESPAÇO e Enter** para cancelar e voltar à tela anterior **sem salvar nada**. Textos com espaço no meio (ex.: palavras da verificação secundária) continuam aceitos normalmente.
@@ -437,7 +438,7 @@ Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0`
    - **Usa Discord? Escolha LOCAL = DISCORD.** O padrão é OUTRO (lê também servidores, canais e membros visíveis). Usa Telegram Web? Escolha TELEGRAM.
 
 **TELA 1 / TELA 2** (v1.5.0) — no topo do SNIPER TELA aparece `TELA 1 ON   TELA 2 OFF`; a destacada é a que você está editando. Digite **t + Enter** para trocar. Todas as opções acima (1 a 7) valem só para a tela em edição — a TELA 2 tem janela, modo, método, LOCAL, intervalo e ON/OFF próprios, e o **6) Testar** testa a tela em edição.
-- **Para ligar a TELA 2:** 3) SNIPER TELA → **t + Enter** (título vira "SNIPER TELA — TELA 2") → **2) Modo de captura** (escolha a 2ª janela, ex.: Telegram) → **3) Método** / **7) LOCAL DO SNIPER** se quiser → **6) Testar** → **1)** para deixar **ON** → 5) Iniciar monitoramento.
+- **Para ligar a TELA 2:** 3) SNIPER TELA → **t + Enter** (título vira "SNIPER TELA — TELA 2") → **2) Modo de captura** (escolha a 2ª janela, ex.: Telegram) → **3) Método** / **7) LOCAL DO SNIPER** se quiser → **6) Testar** → **1)** para deixar **ON** → 6) Iniciar monitoramento.
 - As duas telas são vigiadas **ao mesmo tempo** (cada uma no seu ritmo). O cabeçalho mostra `Tela ON Tela2 ON` e o monitoramento `Tela: ON (1 + 2)`.
 - **Compra em um lugar só:** um contrato visto nas duas telas (ou visto de novo) é comprado **uma única vez**, pela tela que detectou primeiro; a outra registra no log `já detectado por TELA N — não compra de novo`. A trava da sessão (1 compra por sessão) continua valendo para todos os monitores.
 
@@ -453,23 +454,23 @@ Dicas: deixe o Discord **aberto e rolado até o fim** (mensagens mais novas emba
 
 Como funciona:
 - Detecta criação de token em **qualquer plataforma**: pump.fun, Bonk/LaunchLab, Meteora DBC, criação SPL/Token-2022 direta etc. (a transação precisa ser assinada/paga pela carteira vigiada e criar um mint novo; wSOL e tokens que já existiam são ignorados).
-- Só começa depois de **5) Iniciar monitoramento**, junto com os outros monitores (X, sites, tela), e só considera transações **feitas depois** do início.
+- Só começa depois de **6) Iniciar monitoramento**, junto com os outros monitores (X, sites, tela), e só considera transações **feitas depois** do início.
 - Tempo real pelo **websocket** do RPC; se o websocket cair, o bot consulta cada carteira **a cada 1 segundo** até reconectar sozinho. Limites do RPC (erro 429) aparecem no log e o bot desacelera.
-- Compra com o **mesmo valor, slippage, priority fee, Jito/envio duplo e rotas** das Configurações (menu 8) — não há taxas separadas. Contrato terminando em `pump` com a rota "pump" ligada → PumpPortal primeiro; senão Jupiter (com PumpPortal de reserva). Se o token ainda não tem pool/rota, tenta de novo por ~12 segundos.
-- A **Verificação secundária** (menu 10), o **Auto Sell** e o painel **Posições abertas** funcionam igual aos outros monitores.
+- Compra com o **mesmo valor, slippage, priority fee, Jito/envio duplo e rotas** das Configurações (menu 9) — não há taxas separadas. Contrato terminando em `pump` com a rota "pump" ligada → PumpPortal primeiro; senão Jupiter (com PumpPortal de reserva). Se o token ainda não tem pool/rota, tenta de novo por ~12 segundos.
+- A **Verificação secundária** (menu 11), o **Auto Sell** e o painel **Posições abertas** funcionam igual aos outros monitores.
 - Dica: use um RPC próprio (Helius) — o público tem limite baixo de requisições.
 
-**14) SNIPER PUMPFUN** (novo na v1.5.1, só Solana) — vigia **todos os lançamentos da pump.fun** e compra o primeiro token que passar pelos seus filtros de **nome** e/ou **ticker (símbolo)**.
+**5) SNIPER PUMPFUN** (novo na v1.5.1, só Solana; era a opção 14 até a v1.5.1) — vigia **todos os lançamentos da pump.fun** e compra o primeiro token que passar pelos seus filtros de **nome** e/ou **ticker (símbolo)**.
 - **1) SNIPER PUMPFUN: ON/OFF** (padrão OFF).
 - **2) NOME CONTEM PALAVRA: ON/OFF** e **3) NOME - palavra**: o **nome** do token precisa conter a palavra. **4) TICKER CONTEM PALAVRA: ON/OFF** e **5) TICKER - palavra**: o **ticker/símbolo** precisa conter a palavra. Sem diferenciar maiúsculas/acentos; `-` limpa a palavra. Todos vêm OFF e sem palavra.
 - **Regra**: só um filtro ON → só ele precisa casar. Os **dois ON → compra somente se NOME e TICKER casarem**. Os dois OFF → nunca compra. Filtro ON sem palavra cadastrada nunca casa (não compra).
 - **6) TESTE**: começa a monitorar e mostra os **5 últimos tokens lançados** (hora, nome, ticker, mint) atualizando ao vivo — os novos entram em cima. Os que passariam pelas regras acima aparecem marcados com **★ (compraria)**, usando exatamente a mesma regra da compra. **O TESTE nunca compra.** **Enter** volta.
-- **Fonte**: websocket da **PumpPortal** (`wss://pumpportal.fun/api/data`, `subscribeNewToken`; grátis, sem chave, usado só para ver lançamentos). Se a PumpPortal cair e **não reconectar em 5 s**, o bot passa a usar o **RPC cadastrado nas Configurações** (opção 8: o mesmo RPC/WSS que o bot usa para tudo; sem RPC cadastrado, o RPC público padrão) lendo os eventos de criação do programa da pump.fun. Ele continua tentando a PumpPortal em segundo plano e **volta para ela** quando ela retorna. A fonte ativa aparece no TESTE e na tela de monitoramento (`PumpFun: ON (PumpPortal)` / `(RPC)`).
-- **Compra**: ligue e use **5) Iniciar monitoramento**. Usa o valor, slippage, priority fee e Jito configurados (rota PumpPortal primeiro, pois o token novo está na curva da pump.fun; Jupiter como reserva) e respeita o **MCAP MÁXIMO** da Verificação secundária se estiver ligado. Cada contrato é comprado **uma vez só** (vale para todos os snipers; 1 compra por sessão). O log mostra `via pumpfun (nome "...")`, `(ticker "...")` ou `(nome "..." + ticker "...")`.
-- **Verificação secundária de nome (opção 10)**: o SNIPER PUMPFUN **não aplica** essa verificação, mesmo ligada — ele usa só os filtros NOME/TICKER acima (as outras verificações, como MCAP MÁXIMO, continuam valendo). Para X, site, tela e wallet a verificação de nome segue valendo como sempre, inclusive quando rodam junto com o PUMPFUN.
+- **Fonte**: websocket da **PumpPortal** (`wss://pumpportal.fun/api/data`, `subscribeNewToken`; grátis, sem chave, usado só para ver lançamentos). Se a PumpPortal cair e **não reconectar em 5 s**, o bot passa a usar o **RPC cadastrado nas Configurações** (opção 9: o mesmo RPC/WSS que o bot usa para tudo; sem RPC cadastrado, o RPC público padrão) lendo os eventos de criação do programa da pump.fun. Ele continua tentando a PumpPortal em segundo plano e **volta para ela** quando ela retorna. A fonte ativa aparece no TESTE e na tela de monitoramento (`PumpFun: ON (PumpPortal)` / `(RPC)`).
+- **Compra**: ligue e use **6) Iniciar monitoramento**. Usa o valor, slippage, priority fee e Jito configurados (rota PumpPortal primeiro, pois o token novo está na curva da pump.fun; Jupiter como reserva) e respeita o **MCAP MÁXIMO** da Verificação secundária se estiver ligado. Cada contrato é comprado **uma vez só** (vale para todos os snipers; 1 compra por sessão). O log mostra `via pumpfun (nome "...")`, `(ticker "...")` ou `(nome "..." + ticker "...")`.
+- **Verificação secundária de nome (opção 11)**: o SNIPER PUMPFUN **não aplica** essa verificação, mesmo ligada — ele usa só os filtros NOME/TICKER acima (as outras verificações, como MCAP MÁXIMO, continuam valendo). Para X, site, tela e wallet a verificação de nome segue valendo como sempre, inclusive quando rodam junto com o PUMPFUN.
 - Dica: use palavras específicas — na pump.fun saem vários tokens por minuto e uma palavra comum compra o primeiro que aparecer.
 
-**5) Iniciar monitoramento** — pede o **valor por compra** em SOL (padrão 0.01) ou ETH na Robinhood (padrão 0.001) (Enter = último valor; 0 = cancelar) e começa a vigiar X, sites, tela e wallet (os que estiverem ligados). A tela mostra:
+**6) Iniciar monitoramento** — pede o **valor por compra** em SOL (padrão 0.01) ou ETH na Robinhood (padrão 0.001) (Enter = último valor; 0 = cancelar) e começa a vigiar X, sites, tela e wallet (os que estiverem ligados). A tela mostra:
 - o painel **Posições abertas**, com **uma linha por posição**: número, token (símbolo/nome ou contrato curto), quantidade, preço de entrada, preço atual (SOL por token, atualizado em tempo real), **P/L %** (verde/vermelho) e status;
 - o painel **Eventos** só com o que importa (posts, compras, vendas, erros) — a checagem de preço não enche mais a tela;
 - a linha de teclas: **`V = vender  |  Q = parar monitoramento (ou Ctrl+C)`**.
@@ -483,11 +484,11 @@ Como funciona:
 
 A venda usa o mesmo caminho do Auto Sell (Jupiter → PumpPortal, priority fee, Jito/envio duplo e **slippage de venda**) sobre o saldo do token na carteira. Venda parcial: a posição continua aberta com a quantidade restante (o Auto Sell segue valendo para o restante); venda total: a posição é fechada.
 
-**6) Cadastrar private key** — cole a chave da carteira dedicada (veja [Credenciais › 1](#1-private-key-da-carteira-solana)).
+**7) Cadastrar private key** — cole a chave da carteira dedicada (veja [Credenciais › 1](#1-private-key-da-carteira-solana)).
 
-**7) Atualizar/ver saldo** — mostra o endereço da carteira e o saldo em SOL (ou ETH na Robinhood) (o saldo também atualiza sozinho no topo).
+**8) Atualizar/ver saldo** — mostra o endereço da carteira e o saldo em SOL (ou ETH na Robinhood) (o saldo também atualiza sozinho no topo).
 
-**8) Configurações (slippage/priority fee/Jito/RPC)** — com a rede **Solana** ativa (Robinhood: veja abaixo)
+**9) Configurações (slippage/priority fee/Jito/RPC)** — com a rede **Solana** ativa (Robinhood: veja abaixo)
 1. Slippage (%) — quanto o preço pode variar na compra (padrão 15; tokens novos: 15–30%).
 2. Priority fee (SOL) — taxa extra para entrar mais rápido (padrão 0.0005).
 3. Jito bundle — liga/desliga o envio pelo Jito (padrão desligado).
@@ -501,25 +502,25 @@ A venda usa o mesmo caminho do Auto Sell (Jupiter → PumpPortal, priority fee, 
 11. **Enviar por RPC + Jito ao mesmo tempo** — envio duplo da mesma transação (padrão ON; só vale com Jito ligado).
 12. **Contrato termina em "pump" → comprar pela PumpPortal** — rota direta para tokens pump.fun (reserva: Jupiter; padrão OFF).
 
-**8) Configurações — Robinhood Chain** (com a rede Robinhood ativa; gas em gwei, aceita decimal):
+**9) Configurações — Robinhood Chain** (com a rede Robinhood ativa; gas em gwei, aceita decimal):
 1. Slippage de compra (%) (padrão 15). 2. Max fee (gwei; `0` = automático pela base fee, padrão). 3. Priority fee (gwei; normalmente 0).
 4. Teto rígido do max fee (padrão 1 gwei). 5. Gas limit (padrão 600000). 6. RPC HTTP (padrão o público `https://rpc.mainnet.chain.robinhood.com`; ex. Alchemy).
 7. RPC WSS (vazio/`-` = derivado do RPC HTTP; sem WSS a SNIPER WALLET varre blocos a cada 250 ms). 8. Sequenciador. 9. Enviar também pelo sequenciador (ON).
 10. `eth_sendRawTransactionSync` no RPC (ON). 11. Rota de compra (`direct` padrão / `kyber` / `uniswap`). 12. Checagem honeypot em paralelo (ON, só avisa).
 13. Taxa máxima aceitável no aviso honeypot (padrão 15%). 14. Pré-aprovar o roteador após a compra (ON). 15. Feed do sequenciador (**experimental**, OFF).
 
-**Configurações recomendadas (Solana)**: slippage 15–30%, RPC próprio (Helius), Jupiter API key. Na opção **10) Verificação
+**Configurações recomendadas (Solana)**: slippage 15–30%, RPC próprio (Helius), Jupiter API key. Na opção **11) Verificação
 secundária**: **CRIAÇÃO MÁXIMA ON com 1–2 min** (X/site/tela) e **MCAP MÁXIMO ON** com o teto que você aceita pagar (ex.: `50k`).
 
-**9) Auto Sell** — 1) liga/desliga (padrão OFF), 2) % dos tokens a vender (padrão 100), 3) % de lucro alvo (100 = 2x, padrão), 4) intervalo de checagem de preço (padrão 3 s), 5) slippage de venda (começa igual ao de compra), 6) ver posições (com **V** para vender uma posição aberta: parte ou tudo), 7) excluir posição (só do rastreio, não vende), 8) excluir todas as fechadas.
+**10) Auto Sell** — 1) liga/desliga (padrão OFF), 2) % dos tokens a vender (padrão 100), 3) % de lucro alvo (100 = 2x, padrão), 4) intervalo de checagem de preço (padrão 3 s), 5) slippage de venda (começa igual ao de compra), 6) ver posições (com **V** para vender uma posição aberta: parte ou tudo), 7) excluir posição (só do rastreio, não vende), 8) excluir todas as fechadas.
 
-**10) Verificação secundária** — nome: 1) liga/desliga, 2) adicionar palavra, 3) remover palavra, 4) listar, 5) testar com um contrato; 6/7) CRIAÇÃO MÁXIMA (padrão OFF, 60 s); 8/9) MCAP MÁXIMO (padrão OFF, $50k) ([detalhes](#️-verificação-secundária-v142--opção-10-nome-criação-máxima-e-mcap-máximo-solana-e-robinhood)). Com ela ligada e pelo menos uma palavra, o bot só compra se o nome ou símbolo do token contiver uma das palavras (sem diferenciar maiúsculas/acentos). Se o nome não puder ser obtido, não compra. Lista vazia = não bloqueia nada.
+**11) Verificação secundária** — nome: 1) liga/desliga, 2) adicionar palavra, 3) remover palavra, 4) listar, 5) testar com um contrato; 6/7) CRIAÇÃO MÁXIMA (padrão OFF, 60 s); 8/9) MCAP MÁXIMO (padrão OFF, $50k) ([detalhes](#️-verificação-secundária-v142--opção-11-nome-criação-máxima-e-mcap-máximo-solana-e-robinhood)). Com ela ligada e pelo menos uma palavra, o bot só compra se o nome ou símbolo do token contiver uma das palavras (sem diferenciar maiúsculas/acentos). Se o nome não puder ser obtido, não compra. Lista vazia = não bloqueia nada.
 
-**11) Atualizar** — verifica e instala a versão nova manualmente (normalmente não precisa: o bot se atualiza sozinho ao abrir). Quando há versão nova, o topo mostra **"Nova versão vX.Y.Z disponível"**.
+**12) Atualizar** — verifica e instala a versão nova manualmente (normalmente não precisa: o bot se atualiza sozinho ao abrir). Quando há versão nova, o topo mostra **"Nova versão vX.Y.Z disponível"**.
 
-**12) Assinatura** — status da licença (teste grátis de 3 dias / assinatura), vencimento, **Seu ID**, **1) Renovar** (30 USDC = +30 dias), **2) Já paguei, verificar** (quando há pagamento pendente) e **3) Atualizar licença pelo servidor**.
+**13) Assinatura** — status da licença (teste grátis de 3 dias / assinatura), vencimento, **Seu ID**, **1) Renovar** (30 USDC = +30 dias), **2) Já paguei, verificar** (quando há pagamento pendente) e **3) Atualizar licença pelo servidor**.
 
-**13) MUDAR REDE** — 1) Solana ou 2) Robinhood Chain ([detalhes](#-robinhood-chain-v140--opção-13-mudar-rede)).
+**14) MUDAR REDE** — 1) Solana ou 2) Robinhood Chain ([detalhes](#-robinhood-chain-v140--opção-14-mudar-rede)).
 
 **0) Sair** — fecha o bot.
 
@@ -548,13 +549,13 @@ Abra pelo atalho **Sniper Rocket** (ou `%LOCALAPPDATA%\SniperRocket\sniper.exe`)
 Normal para programas sem assinatura paga. Clique em **Mais informações → Executar assim mesmo**. Baixe sempre só da página oficial de Releases deste repositório.
 
 **Erro 503 / 429 do Jupiter.**
-O Jupiter está sobrecarregado ou você atingiu o limite de requisições. Cadastre uma **Jupiter API key** (menu 8 → 6), mantenha o **Fallback PumpPortal** ligado (menu 8 → 9) e, se quiser, aumente as tentativas de cotação (menu 8 → 7/8).
+O Jupiter está sobrecarregado ou você atingiu o limite de requisições. Cadastre uma **Jupiter API key** (menu 9 → 6), mantenha o **Fallback PumpPortal** ligado (menu 9 → 9) e, se quiser, aumente as tentativas de cotação (menu 9 → 7/8).
 
 **"Token não negociável" / não consegue cotar.**
-O token pode ser recém-criado e ainda não indexado pelo Jupiter, não ter liquidez, ou não ser negociável (golpe/endereço errado). O bot tenta de novo algumas vezes e usa a PumpPortal como reserva. Para tokens da pump.fun (terminam em `pump`), ligue o item **12** do menu 8.
+O token pode ser recém-criado e ainda não indexado pelo Jupiter, não ter liquidez, ou não ser negociável (golpe/endereço errado). O bot tenta de novo algumas vezes e usa a PumpPortal como reserva. Para tokens da pump.fun (terminam em `pump`), ligue o item **12** do menu 9.
 
 **O saldo aparece como "erro".**
-Verifique a internet e a URL do RPC (menu 8 → 5). Digite `-` para voltar ao RPC público e testar.
+Verifique a internet e a URL do RPC (menu 9 → 5). Digite `-` para voltar ao RPC público e testar.
 
 **O monitor do X não conecta.**
 Confira se colou o **Bearer Token** (não o Client ID/Secret) e se sua conta de desenvolvedor do X tem créditos/acesso ao stream.
@@ -566,4 +567,4 @@ Na primeira abertura o bot precisa de internet para ativar o teste grátis. Cone
 Confira se enviou **USDC na rede Solana**, da **carteira informada**, para o endereço correto, numa transação de **30 USDC ou mais**. Use **"Já paguei, verificar"** (aceito até 60 min após iniciar o pagamento). Se não resolver, envie ao suporte o **Seu ID** e a assinatura (link do Solscan) da transação.
 
 **A atualização automática não aconteceu.**
-Sem internet ou o antivírus bloqueou o download/instalador: o bot segue na versão atual e registra o motivo no log. Use a opção **11** ou baixe o Setup novo em Releases e instale por cima (as configurações são mantidas).
+Sem internet ou o antivírus bloqueou o download/instalador: o bot segue na versão atual e registra o motivo no log. Use a opção **12** ou baixe o Setup novo em Releases e instale por cima (as configurações são mantidas).
