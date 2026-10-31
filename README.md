@@ -13,20 +13,20 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 - **Use uma carteira NOVA e dedicada**, só para o bot, com pouco saldo. Nunca use a carteira principal.
 - **Nunca compartilhe sua private key nem a pasta `config`** (ela guarda a chave em texto puro, além dos seus tokens de API). Ninguém do suporte vai pedir isso. Quem tem a chave tem o dinheiro.
 - Este software é fornecido "como está", sem garantia de lucro ou de funcionamento. O uso é por sua conta e risco.
-- **Taxa de 1% em toda compra e venda (a partir da v1.5.7)** — veja a seção abaixo. A taxa é cobrada em SOL (Solana) ou ETH (Robinhood Chain) e aparece sempre no bot.
+- **Taxa de 2% em toda compra e venda (1% desde a v1.5.7; 2% a partir da v1.5.16)** — veja a seção abaixo. A taxa é cobrada em SOL (Solana) ou ETH (Robinhood Chain) e aparece sempre no bot.
 
 ---
 
-## 💸 Taxa da plataforma de 1% (a partir da v1.5.7)
+## 💸 Taxa da plataforma de 2% (a partir da v1.5.16)
 
-**A partir da v1.5.7 o Sniper Rocket cobra 1% em TODA compra e em TODA venda, na Solana e na Robinhood Chain**, em todas as funções (snipers X/SITE/TELA/WALLET, PUMPFUN, Auto Sell/STOP LOSS, venda manual e COPY TRADE). Não há taxa escondida: ela aparece em **Configurações (9)**, na **Assinatura (13)**, na tela inicial, em cada linha de compra/venda e no `logs\logs.txt`.
+**A partir da v1.5.16 o Sniper Rocket cobra 2% (era 1% desde a v1.5.7) em TODA compra e em TODA venda, na Solana e na Robinhood Chain**, em todas as funções (snipers X/SITE/TELA/WALLET, PUMPFUN, Auto Sell/STOP LOSS, venda manual e COPY TRADE). Não há taxa escondida: ela aparece em **Configurações (9)**, na **Assinatura (13)**, na tela inicial, em cada linha de compra/venda e no `logs\logs.txt`.
 
 | Rede | Paga em | Carteira que recebe a taxa |
 |---|---|---|
 | **Solana** | **SOL** | `GzZXvB33xW6RwW1EZagS1iwiJ6Z4KbkZmKpTwpQ3zjsw` |
 | **Robinhood Chain** | **ETH** | `0x47ece15f42fafca6d8c7a028799be8f1e7411e92` |
 
-- **Quanto:** compra = 1% do valor gasto na compra (somado ao valor); venda = 1% do que a venda rende. Ex.: compra de 1 SOL → taxa de 0,01 SOL.
+- **Quanto:** compra = 2% do valor gasto na compra (somado ao valor); venda = 2% do que a venda rende. Ex.: compra de 1 SOL → taxa de 0,02 SOL.
 - **Como:** na Solana a taxa vai **na mesma transação** do swap (se o swap falhar, não há taxa); se não couber, vai numa transação separada **só depois do swap confirmado**. Na Robinhood Chain é uma transferência de ETH separada, **só depois do recibo com sucesso**.
 - **A taxa nunca impede a operação:** em valores muito pequenos ou saldo insuficiente para valor + taxa, ela é **pulada com um AVISO** e a compra/venda segue sem a taxa.
 - **PnL:** o PnL do Auto Sell/STOP LOSS e do COPY TRADE já desconta a taxa.
@@ -38,6 +38,7 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 
 | Versão | O que mudou |
 |---|---|
+| **v1.5.16** | **TELEGRAM com botões e controle pelo celular + taxa de 2%** — tudo por **botões** (📊 Status, ⚙️ Configurações, 📜 Logs, ❓ Ajuda, 🔀 Mudar rede, 🔄 Atualizar, 💰 Saldo, 🔑 Assinatura e os testes dos menus, só leitura), com uma janela de menu só e cartões de log com emojis e link da transação. **🎯 Monitoramento:** inicie (com confirmação) ou pare o monitoramento (opção 6) e o COPY TRADE pelo Telegram — o PC precisa estar no menu principal. **💼 Posições:** botões **25% / 50% / 100%** que vendem **na hora** (mesma venda do PC, trava contra toque duplo, link da tx no resultado). Cada posição aberta tem **uma mensagem viva** atualizada no lugar (preço/PnL), marcada 🏁 quando fecha. Respostas mais rápidas aos botões; botões de confirmação/venda valem 60 s; só a sua conversa pareada é aceita; continua desligado por padrão e sem mostrar segredos. **Taxa da plataforma agora é de 2%** (era 1%) em toda compra e venda — Solana: SOL para `GzZXvB33xW6RwW1EZagS1iwiJ6Z4KbkZmKpTwpQ3zjsw`; Robinhood Chain: ETH para `0x47ece15f42fafca6d8c7a028799be8f1e7411e92`. Correção: a 1ª compra da sessão podia sair sem a taxa; agora é cobrada (compra que falha continua sem taxa). |
 | **v1.5.15** | **TELEGRAM (opcional, desligado por padrão)** — nova opção **16) TELEGRAM**: crie o seu próprio bot no @BotFather, cole o token e pareie enviando um código de 6 dígitos (só a sua conversa é aceita). Receba os logs ao vivo e ajuste **todas as configurações dos menus** pelo Telegram (/status, /config, /logs on\|off, /help). **Nenhuma compra** é feita pelo Telegram; chaves privadas, token e RPC nunca são mostrados. Compras, Solana e Robinhood sem mudanças. Taxa de 1% igual. |
 | **v1.5.14** | **SNIPER SITE: nova opção PUMP PRIMEIRO (desligada por padrão)** — no SNIPER SITE CONFIG, item **5) PUMP PRIMEIRO** (só Solana). Ligada, quando o site mostra só endereços novos soltos (sem campo contrato e sem link pump.fun), o endereço que termina em "pump" é comprado primeiro, sem esperar a checagem; se não comprar, os outros seguem o fluxo normal. Sempre **uma única compra**. Campo contrato/link pump.fun continua com prioridade; Robinhood sem mudanças. Taxa de 1% igual. |
 | **v1.5.13** | **SNIPER WALLET mais rápida, SNIPER SITE em paralelo e atualização silenciosa** — SNIPER WALLET (Robinhood): cotação em 1 ida e volta (o registro do token na Pons já fica pronto quando a compra começa) e a linha "enviada" sai quando a rede aceita a tx, com a confirmação medida à parte. SNIPER SITE: cada site é checado ao mesmo tempo, sem um site lento atrasar os outros; contrato em campo (mint/ca/contract) ou link pump.fun continua com prioridade; se só aparecerem endereços novos soltos, o bot tenta todos de uma vez e faz **uma única compra** (carteira ou programa é descartado sem enviar nada) e depois para. Quando a atualização automática fecha o bot, ele sai sem mostrar erro na tela. Taxa de 1% igual. |
@@ -168,7 +169,7 @@ O programa é instalado em `%LOCALAPPDATA%\SniperRocket` (pasta do seu usuário)
 
 - **Teste grátis de 3 dias**: começa na **primeira vez que o bot é aberto** neste PC (precisa de internet nessa primeira abertura). Reinstalar o bot **não** reinicia o teste.
 - **Plano: 30 USDC por 30 dias.** Os dias **se somam**: se você renovar antes de vencer, os 30 dias novos entram depois dos que ainda faltam.
-- **Taxa de 1% por operação (v1.5.7):** além da assinatura, o bot cobra 1% em toda compra e venda (SOL na Solana, ETH na Robinhood Chain) — veja [Taxa da plataforma](#-taxa-da-plataforma-de-1-a-partir-da-v157).
+- **Taxa de 2% por operação (v1.5.16; era 1% desde a v1.5.7):** além da assinatura, o bot cobra 2% em toda compra e venda (SOL na Solana, ETH na Robinhood Chain) — veja [Taxa da plataforma](#-taxa-da-plataforma-de-2-a-partir-da-v157).
 - **Licença por PC**: cada licença vale para **um computador**. Ela não funciona se for copiada para outro PC.
 - No dia a dia o bot confere a licença **no próprio computador** (não depende do servidor). Não altere a data/hora do Windows para trás: o bot detecta e mostra **"Relógio do sistema alterado"** (acerte o relógio e escolha "Tentar novamente").
 
@@ -483,13 +484,13 @@ Em todos os submenus: escolha o item, **Enter vazio mantém o valor atual**, `0`
 - **Contratos ignorados:** o motivo aparece (1 linha por endereço a cada 2 min). `screen_seen.json` guarda só os endereços/mints vistos com horário e vale 24 h; os mais recentes são mantidos.
 - **RPC com erro:** `getMultipleAccounts 429`/timeout aparece na tela e o endereço é tentado de novo em 30 s (até 4×); só "não é mint" de verdade conta como descartado.
 
-**💸 Taxa da plataforma de 1% (v1.5.7; Solana e Robinhood Chain)**
-- **O que é:** 1% em **toda compra e venda**, nas duas redes e em todas as funções. **Solana:** em SOL para `GzZXvB33xW6RwW1EZagS1iwiJ6Z4KbkZmKpTwpQ3zjsw`. **Robinhood Chain:** em ETH para `0x47ece15f42fafca6d8c7a028799be8f1e7411e92`.
-- **Valor:** compra = 1% do valor gasto no swap (somado ao valor da compra); venda = 1% do que a venda rende.
+**💸 Taxa da plataforma de 2% (v1.5.7, 2% desde a v1.5.16; Solana e Robinhood Chain)**
+- **O que é:** 2% em **toda compra e venda**, nas duas redes e em todas as funções. **Solana:** em SOL para `GzZXvB33xW6RwW1EZagS1iwiJ6Z4KbkZmKpTwpQ3zjsw`. **Robinhood Chain:** em ETH para `0x47ece15f42fafca6d8c7a028799be8f1e7411e92`.
+- **Valor:** compra = 2% do valor gasto no swap (somado ao valor da compra); venda = 2% do que a venda rende.
 - **Como é cobrada:** Solana → na **mesma transação** do swap (atômica; swap que falha não paga); se não couber na tx, em transação separada **só depois do swap confirmado**. Robinhood → transferência de ETH separada **só depois do recibo status 1**.
-- **Onde aparece:** Configurações (9), Assinatura (13), tela inicial, cada linha de compra/venda (`taxa 1%: 0.005000 SOL (mesma tx)`) e `logs\logs.txt`.
+- **Onde aparece:** Configurações (9), Assinatura (13), tela inicial, cada linha de compra/venda (`taxa 2%: 0.005000 SOL (mesma tx)`) e `logs\logs.txt`.
 - **Nunca bloqueia a operação:** abaixo do mínimo (Solana: taxa < 5.000 lamports; Robinhood: < 0,000002 ETH), saldo curto, venda sem estimativa de valor pela PumpPortal, carteira da taxa Solana ainda sem o depósito inicial de 0,00089088 SOL ou erro de cálculo → a taxa é **pulada com AVISO** e a compra/venda segue.
-- **PnL:** Auto Sell/STOP LOSS e COPY TRADE descontam a taxa (entrada com taxa, saída líquida de 1%).
+- **PnL:** Auto Sell/STOP LOSS e COPY TRADE descontam a taxa (entrada com taxa, saída líquida de 2%).
 
 **🔁 COPY TRADE — opção 15 (v1.5.6; v1.5.7: SÓ Solana, mais rápido, modos COMPRA/VENDA)**
 - **Menu:** 1 WALLET PARA COPIAR · 2 VALOR POR ENTRADA · 3 STOP LOSS (ON/OFF + %) · 4 TAKE PROFIT (ON/OFF + %) · 5 INICIAR MONITORAMENTO · **6 INTERVALO DE CHECAGEM** (s; padrão 1,0, mín. 0,5, máx. 60) · **7 COMPRA** (PRIMEIRA ou TODAS) · **8 VENDA** (SÓ QUANDO ZERAR, PRIMEIRA ou TODAS). O cabeçalho mostra os valores atuais. **Só Solana:** na Robinhood a opção 15 avisa e sugere a opção 14 (MUDAR REDE); as chaves antigas `rh_ct_*` ficam no config mas são ignoradas.
