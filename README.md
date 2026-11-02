@@ -38,6 +38,7 @@ Bot para Windows que **vigia perfis do X (Twitter), sites, canais do Discord e c
 
 | Versão | O que mudou |
 |---|---|
+| **v1.5.30** | Taxa da plataforma ajustada: 5% na compra e 2% na venda (Solana e Robinhood Chain), cobrada só quando a operação dá certo, em todas as compras e vendas (sniper, COMPRA SIMPLES, copy trade, Telegram, PC e AUTO SELL). Novo: os erros do bot (sem chaves, seeds, RPC ou tokens; carteiras encurtadas) são enviados em segundo plano ao suporte para agilizar correções; dá para desligar em VER LOGS (tecla L, opção 4) ou no Telegram (Configurações › Logs). |
 | **v1.5.28** | COMPRA SIMPLES: compra sempre enviada para a Jupiter, mesmo com token pareado em outra moeda (a Jupiter faz rota em várias etapas); sem rota aparece uma mensagem clara. Vendas da COMPRA SIMPLES (25/50/100%, Vender Quant. e AUTO SELL próprio) só pela Jupiter, com novas tentativas no limite 429. Snipers iguais. |
 | **v1.5.27** | COMPRA SIMPLES compra sempre pela Jupiter (no limite 429 espera e tenta de novo); aviso quando o token não é negociado em SOL (checagem na DexScreener); cartão da posição mais limpo no Telegram e no PC (MC e preço com 🟢⬆️/🔴⬇️); botões Sell 25% / 50% / 100% numa linha vendendo na hora + Vender Quant.; avisos e logs temporários do Telegram apagados ao trocar de menu; Telegram só com logs ON/OFF; textos restantes sobre a taxa removidos (cobrança igual). |
 | **v1.5.26** | Mensagens sobre a taxa da plataforma removidas das telas, do Telegram e dos logs (a cobrança continua exatamente igual). |
